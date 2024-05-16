@@ -18,68 +18,63 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Cxj-ez-H1G">
-                                <rect key="frame" x="16" y="0.0" width="361" height="852"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" name="colorBlack"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="200" id="IVD-pW-9Qd" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="361" height="200"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ImagesListCell" rowHeight="200" id="IVD-pW-9Qd" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IVD-pW-9Qd" id="nPu-8v-Y5Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="361" height="200"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmu-Zo-FRT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="361" height="200"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Images/Image0" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-Hd-h6d" userLabel="Cell Image">
-                                                            <rect key="frame" x="0.0" y="0.0" width="361" height="200"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <color key="backgroundColor" name="colorBlack"/>
-                                                        </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uE2-NC-qEy" userLabel="LikeButton">
-                                                            <rect key="frame" x="317" y="0.0" width="44" height="44"/>
-                                                            <accessibility key="accessibilityConfiguration">
-                                                                <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                                            </accessibility>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="44" id="HtX-3d-A0D"/>
-                                                                <constraint firstAttribute="height" constant="44" id="m5s-GP-HNw"/>
-                                                            </constraints>
-                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="FavoritreNoActive">
-                                                                <color key="titleColor" name="colorBlack"/>
-                                                            </state>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LyI-cc-8yO" userLabel="DateLabel">
-                                                            <rect key="frame" x="8" y="176.66666666666666" width="96.666666666666671" height="15.333333333333343"/>
-                                                            <fontDescription key="fontDescription" name="SFPro-Regular" family="SF Pro" pointSize="13"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="LyI-cc-8yO" firstAttribute="leading" secondItem="Mmu-Zo-FRT" secondAttribute="leading" constant="8" id="B7X-9C-7g0"/>
-                                                        <constraint firstAttribute="trailing" secondItem="uE2-NC-qEy" secondAttribute="trailing" id="FaV-ns-Xpd"/>
-                                                        <constraint firstItem="uE2-NC-qEy" firstAttribute="top" secondItem="Mmu-Zo-FRT" secondAttribute="top" id="X4l-RS-b9s"/>
-                                                        <constraint firstAttribute="bottom" secondItem="LyI-cc-8yO" secondAttribute="bottom" constant="8" id="g9K-mc-ehd"/>
-                                                    </constraints>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Images/Image0" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-Hd-h6d" userLabel="Cell Image">
+                                                    <rect key="frame" x="16" y="4" width="361" height="192"/>
+                                                    <color key="backgroundColor" name="colorBlack"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="16"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
-                                                </view>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uE2-NC-qEy" userLabel="LikeButton">
+                                                    <rect key="frame" x="333" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="HtX-3d-A0D"/>
+                                                        <constraint firstAttribute="height" constant="44" id="m5s-GP-HNw"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="FavoritreNoActive"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="27 августа 2022" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LyI-cc-8yO" userLabel="DateLabel">
+                                                    <rect key="frame" x="132" y="92" width="96.666666666666657" height="15.333333333333371"/>
+                                                    <fontDescription key="fontDescription" name="SFPro-Regular" family="SF Pro" pointSize="13"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" name="colorBlack"/>
                                             <constraints>
-                                                <constraint firstItem="Mmu-Zo-FRT" firstAttribute="leading" secondItem="nPu-8v-Y5Q" secondAttribute="leading" id="N4G-y0-ZAE"/>
-                                                <constraint firstItem="Mmu-Zo-FRT" firstAttribute="top" secondItem="nPu-8v-Y5Q" secondAttribute="top" id="aBt-lh-EbX"/>
-                                                <constraint firstAttribute="trailing" secondItem="Mmu-Zo-FRT" secondAttribute="trailing" id="c1p-jM-Yue"/>
-                                                <constraint firstAttribute="bottom" secondItem="Mmu-Zo-FRT" secondAttribute="bottom" id="iVT-qs-aEB"/>
+                                                <constraint firstItem="LyI-cc-8yO" firstAttribute="leading" secondItem="tJP-Hd-h6d" secondAttribute="leading" constant="8" id="0Jf-8s-7Va"/>
+                                                <constraint firstItem="uE2-NC-qEy" firstAttribute="top" secondItem="tJP-Hd-h6d" secondAttribute="top" id="CPF-ga-bbd"/>
+                                                <constraint firstItem="tJP-Hd-h6d" firstAttribute="leading" secondItem="nPu-8v-Y5Q" secondAttribute="leading" constant="16" id="CYn-Hb-Vqu"/>
+                                                <constraint firstItem="tJP-Hd-h6d" firstAttribute="bottom" secondItem="LyI-cc-8yO" secondAttribute="bottom" constant="8" id="Fl8-02-G4N"/>
+                                                <constraint firstAttribute="trailing" secondItem="tJP-Hd-h6d" secondAttribute="trailing" constant="16" id="Lfd-fj-d0r"/>
+                                                <constraint firstItem="LyI-cc-8yO" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tJP-Hd-h6d" secondAttribute="trailing" constant="8" id="NZi-7S-n3Y"/>
+                                                <constraint firstAttribute="bottom" secondItem="tJP-Hd-h6d" secondAttribute="bottom" constant="4" id="TTm-MT-WTh"/>
+                                                <constraint firstItem="uE2-NC-qEy" firstAttribute="trailing" secondItem="tJP-Hd-h6d" secondAttribute="trailing" id="z70-qe-Dm0"/>
+                                                <constraint firstItem="tJP-Hd-h6d" firstAttribute="top" secondItem="nPu-8v-Y5Q" secondAttribute="top" constant="4" id="zeh-mw-htK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="tJP-Hd-h6d" id="MdQ-t8-hDt"/>
+                                            <outlet property="dateLabel" destination="LyI-cc-8yO" id="4aC-Cs-azA"/>
+                                            <outlet property="likeButton" destination="uE2-NC-qEy" id="cFO-3v-nQQ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -92,9 +87,9 @@
                         <color key="backgroundColor" name="colorBlack"/>
                         <constraints>
                             <constraint firstItem="Cxj-ez-H1G" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="C8V-wL-I0J"/>
-                            <constraint firstItem="Cxj-ez-H1G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="JfZ-sV-5wg"/>
+                            <constraint firstItem="Cxj-ez-H1G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JfZ-sV-5wg"/>
                             <constraint firstAttribute="bottom" secondItem="Cxj-ez-H1G" secondAttribute="bottom" id="cND-uu-t6Z"/>
-                            <constraint firstAttribute="trailing" secondItem="Cxj-ez-H1G" secondAttribute="trailing" constant="16" id="dyl-Fw-FyH"/>
+                            <constraint firstAttribute="trailing" secondItem="Cxj-ez-H1G" secondAttribute="trailing" id="dyl-Fw-FyH"/>
                         </constraints>
                     </view>
                     <connections>
