@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3A-PW-Ziq">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -100,12 +100,103 @@
             </objects>
             <point key="canvasLocation" x="84" y="-34"/>
         </scene>
+        <!--ProfileViewController-->
+        <scene sceneID="wtq-fm-t1C">
+            <objects>
+                <viewController title="Profile" id="F3A-PW-Ziq" userLabel="ProfileViewController" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GC0-yR-CoH">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Shg-Ai-EMz">
+                                <rect key="frame" x="16.000000000000014" y="90.999999999999986" width="225.33333333333337" height="151.66666666666663"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePhoto" translatesAutoresizingMaskIntoConstraints="NO" id="UQW-90-u20" userLabel="ProfilePhoto">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="cSQ-25-7ma"/>
+                                            <constraint firstAttribute="width" constant="70" id="rkP-hm-igW"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6f-NS-HOP" userLabel="NameLabel">
+                                        <rect key="frame" x="0.0" y="78" width="225.33333333333334" height="27"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Екатерина Новикова">
+                                                <attributes>
+                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <font key="NSFont" size="23" name="SFPro-Regular"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ekaterina_nov" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2b-q7-e2w" userLabel="EmailLabel">
+                                        <rect key="frame" x="0.0" y="113" width="91.333333333333329" height="15.333333333333343"/>
+                                        <fontDescription key="fontDescription" name="SFPro-Regular" family="SF Pro" pointSize="13"/>
+                                        <color key="textColor" name="colorGrey"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H20-JA-Snj" userLabel="StatusLabel">
+                                        <rect key="frame" x="0.0" y="136.33333333333334" width="72.666666666666671" height="15.333333333333343"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Hello, world!">
+                                                <attributes>
+                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <font key="NSFont" size="13" name="SFPro-Regular"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8N8-CR-x4p" userLabel="LogoutButton">
+                                <rect key="frame" x="345" y="114" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="BdQ-c9-7y9"/>
+                                    <constraint firstAttribute="height" constant="24" id="g5s-83-Mmh"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="LogoutIcon"/>
+                                <connections>
+                                    <action selector="tapOnLogoutButton:" destination="F3A-PW-Ziq" eventType="touchUpInside" id="UMp-7z-dJH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bdz-TH-NSz"/>
+                        <color key="backgroundColor" name="colorBlack"/>
+                        <constraints>
+                            <constraint firstItem="8N8-CR-x4p" firstAttribute="top" secondItem="bdz-TH-NSz" secondAttribute="top" constant="55" id="NG4-7F-iaJ"/>
+                            <constraint firstItem="Shg-Ai-EMz" firstAttribute="top" secondItem="bdz-TH-NSz" secondAttribute="top" constant="32" id="Q9g-Nc-eWn"/>
+                            <constraint firstItem="8N8-CR-x4p" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bdz-TH-NSz" secondAttribute="leading" constant="24" id="YxC-k8-n7h"/>
+                            <constraint firstItem="bdz-TH-NSz" firstAttribute="trailing" secondItem="8N8-CR-x4p" secondAttribute="trailing" constant="24" id="h0K-mj-6jf"/>
+                            <constraint firstItem="Shg-Ai-EMz" firstAttribute="leading" secondItem="bdz-TH-NSz" secondAttribute="leading" constant="16" id="lkk-ea-TQh"/>
+                            <constraint firstItem="bdz-TH-NSz" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Shg-Ai-EMz" secondAttribute="trailing" constant="16" id="uYD-bl-mde"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailLabel" destination="c2b-q7-e2w" id="ojw-Rq-1K2"/>
+                        <outlet property="logoutrButton" destination="8N8-CR-x4p" id="42A-Bl-q9y"/>
+                        <outlet property="nameLabel" destination="k6f-NS-HOP" id="T9G-dG-FzZ"/>
+                        <outlet property="profilePhoto" destination="UQW-90-u20" id="Zh6-N2-iOs"/>
+                        <outlet property="statusLabel" destination="H20-JA-Snj" id="cdO-R0-yp0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ccq-4F-70A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1743" y="-839"/>
+        </scene>
     </scenes>
     <resources>
         <image name="FavoritreNoActive" width="30" height="26"/>
         <image name="Images/Image0" width="1600" height="1059"/>
+        <image name="LogoutIcon" width="24" height="24"/>
+        <image name="ProfilePhoto" width="70" height="70"/>
         <namedColor name="colorBlack">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="colorGrey">
+            <color red="0.68235294117647061" green="0.68627450980392157" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
