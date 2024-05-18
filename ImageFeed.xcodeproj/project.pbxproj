@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */; };
+		32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */; };
 		3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288CB532BE4F5A8006B5BCC /* AppDelegate.swift */; };
 		3288CB562BE4F5A8006B5BCC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288CB552BE4F5A8006B5BCC /* SceneDelegate.swift */; };
 		3288CB582BE4F5A8006B5BCC /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288CB572BE4F5A8006B5BCC /* ImagesListViewController.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3288CB502BE4F5A8006B5BCC /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3288CB532BE4F5A8006B5BCC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3288CB552BE4F5A8006B5BCC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				3288CB572BE4F5A8006B5BCC /* ImagesListViewController.swift */,
 				3288CB832BF12A17006B5BCC /* ImagesListCell.swift */,
+				32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				3288CB842BF12A17006B5BCC /* ImagesListCell.swift in Sources */,
 				32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */,
 				3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */,
+				32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */,
 				3288CB562BE4F5A8006B5BCC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
