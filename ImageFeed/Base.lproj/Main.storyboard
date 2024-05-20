@@ -224,10 +224,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="ACU-B5-Rgb" userLabel="FullImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" name="colorBlack"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e7S-Pv-nJT">
+                                <rect key="frame" x="-20" y="-20" width="433" height="892"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="ACU-B5-Rgb" userLabel="FullImageView">
+                                        <rect key="frame" x="20" y="20" width="393" height="852"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" name="colorBlack"/>
+                                    </imageView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="BGQ-St-7Db"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="M0e-lR-tiG"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1UT-ey-zE5" id="efB-3Z-f5m"/>
+                                </connections>
+                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNg-Hi-YOC" userLabel="BackwardButton">
                                 <rect key="frame" x="9" y="11" width="24" height="24"/>
                                 <constraints>
@@ -245,18 +256,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LNg-Hi-YOC" firstAttribute="top" secondItem="k9m-Ln-fWj" secondAttribute="top" constant="11" id="7gK-cP-n6i"/>
-                            <constraint firstItem="ACU-B5-Rgb" firstAttribute="leading" secondItem="qeS-ld-YtQ" secondAttribute="leading" id="9Sb-QK-RVL"/>
-                            <constraint firstAttribute="trailing" secondItem="ACU-B5-Rgb" secondAttribute="trailing" id="BOq-We-iHH"/>
-                            <constraint firstAttribute="bottom" secondItem="ACU-B5-Rgb" secondAttribute="bottom" id="OvG-I5-Nex"/>
+                            <constraint firstItem="k9m-Ln-fWj" firstAttribute="leading" secondItem="e7S-Pv-nJT" secondAttribute="leading" id="Gsc-UZ-sVg"/>
+                            <constraint firstItem="e7S-Pv-nJT" firstAttribute="bottom" secondItem="k9m-Ln-fWj" secondAttribute="bottom" id="Qh0-XL-Xph"/>
+                            <constraint firstItem="k9m-Ln-fWj" firstAttribute="top" secondItem="e7S-Pv-nJT" secondAttribute="top" id="Tq5-Kf-KmO"/>
                             <constraint firstItem="LNg-Hi-YOC" firstAttribute="leading" secondItem="k9m-Ln-fWj" secondAttribute="leading" constant="9" id="aF9-Ii-Hao"/>
-                            <constraint firstItem="ACU-B5-Rgb" firstAttribute="top" secondItem="qeS-ld-YtQ" secondAttribute="top" id="bvB-Yr-MBS"/>
                             <constraint firstItem="k9m-Ln-fWj" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LNg-Hi-YOC" secondAttribute="trailing" constant="9" id="eOE-ZO-vQz"/>
+                            <constraint firstItem="e7S-Pv-nJT" firstAttribute="trailing" secondItem="k9m-Ln-fWj" secondAttribute="trailing" id="r5D-4F-66B"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Qkg-Uo-bxv"/>
                     <connections>
                         <outlet property="backwardButton" destination="LNg-Hi-YOC" id="uDk-FS-SJk"/>
                         <outlet property="imageView" destination="ACU-B5-Rgb" id="xj7-6Q-UGd"/>
+                        <outlet property="scrollView" destination="e7S-Pv-nJT" id="wtJ-Ij-sOi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iMz-yi-g6z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
