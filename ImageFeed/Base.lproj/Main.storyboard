@@ -251,6 +251,18 @@
                                     <action selector="didTapBackwardButton:" destination="1UT-ey-zE5" eventType="touchUpInside" id="68N-yR-5po"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y1H-1S-9Bg" userLabel="SharingButton">
+                                <rect key="frame" x="171" y="751" width="51" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="51" id="HYa-4u-pfn"/>
+                                    <constraint firstAttribute="height" constant="51" id="aqY-cw-HTl"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="SharingIcon"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="1UT-ey-zE5" eventType="touchUpInside" id="g4J-mO-66K"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9m-Ln-fWj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -259,8 +271,10 @@
                             <constraint firstItem="k9m-Ln-fWj" firstAttribute="leading" secondItem="e7S-Pv-nJT" secondAttribute="leading" id="Gsc-UZ-sVg"/>
                             <constraint firstItem="e7S-Pv-nJT" firstAttribute="bottom" secondItem="k9m-Ln-fWj" secondAttribute="bottom" id="Qh0-XL-Xph"/>
                             <constraint firstItem="k9m-Ln-fWj" firstAttribute="top" secondItem="e7S-Pv-nJT" secondAttribute="top" id="Tq5-Kf-KmO"/>
+                            <constraint firstItem="y1H-1S-9Bg" firstAttribute="centerX" secondItem="k9m-Ln-fWj" secondAttribute="centerX" id="Ur1-QO-j8S"/>
                             <constraint firstItem="LNg-Hi-YOC" firstAttribute="leading" secondItem="k9m-Ln-fWj" secondAttribute="leading" constant="9" id="aF9-Ii-Hao"/>
                             <constraint firstItem="k9m-Ln-fWj" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LNg-Hi-YOC" secondAttribute="trailing" constant="9" id="eOE-ZO-vQz"/>
+                            <constraint firstItem="k9m-Ln-fWj" firstAttribute="bottom" secondItem="y1H-1S-9Bg" secondAttribute="bottom" constant="50" id="l0V-o4-aBQ"/>
                             <constraint firstItem="e7S-Pv-nJT" firstAttribute="trailing" secondItem="k9m-Ln-fWj" secondAttribute="trailing" id="r5D-4F-66B"/>
                         </constraints>
                     </view>
@@ -269,6 +283,7 @@
                         <outlet property="backwardButton" destination="LNg-Hi-YOC" id="uDk-FS-SJk"/>
                         <outlet property="imageView" destination="ACU-B5-Rgb" id="xj7-6Q-UGd"/>
                         <outlet property="scrollView" destination="e7S-Pv-nJT" id="wtJ-Ij-sOi"/>
+                        <outlet property="sharingButton" destination="y1H-1S-9Bg" id="3UM-pb-s1L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iMz-yi-g6z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -283,6 +298,7 @@
         <image name="Images/Image0" width="1600" height="1059"/>
         <image name="LogoutIcon" width="24" height="24"/>
         <image name="ProfilePhoto" width="70" height="70"/>
+        <image name="SharingIcon" width="51" height="51"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="colorBlack">

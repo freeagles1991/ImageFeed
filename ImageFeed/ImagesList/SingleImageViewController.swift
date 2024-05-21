@@ -24,6 +24,8 @@ final class SingleImageViewController: UIViewController{
     
     @IBOutlet private var scrollView: UIScrollView!
     
+    @IBOutlet var sharingButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
@@ -34,9 +36,20 @@ final class SingleImageViewController: UIViewController{
         scrollView.maximumZoomScale = 1.25
     }
     
+    //Тап по кнопке "Назад"
     @IBAction private func didTapBackwardButton(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    //Тап по кнопке "Поделиться"
+    @IBAction func didTapShareButton(_ sender: UIButton) {
+        guard let image = image else {
+            assertionFailure("Не удалось поделиться изображением")
+            return }
+        let imageToShare = [image]
+        presentActivityViewController(from: self, with: imageToShare)
+    }
+    
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
@@ -54,6 +67,12 @@ final class SingleImageViewController: UIViewController{
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
+    
+    private func presentActivityViewController(from viewController: UIViewController, with items: [UIImage]) {
+        let activityViewController = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        
+        viewController.present(activityViewController, animated: true, completion: nil)
+    }
 }
 
 extension SingleImageViewController: UIScrollViewDelegate{
@@ -61,3 +80,4 @@ extension SingleImageViewController: UIScrollViewDelegate{
         imageView
     }
 }
+
