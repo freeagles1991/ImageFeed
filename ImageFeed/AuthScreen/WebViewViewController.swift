@@ -16,6 +16,7 @@ enum WebViewConstants {
 final class WebViewViewController: UIViewController{
     @IBOutlet var webView: WKWebView!
     
+    @IBOutlet var progressView: UIProgressView!
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
