@@ -10,6 +10,7 @@ import UIKit
 
 final class AuthViewController: UIViewController{
     weak var delegate: WebViewViewControllerDelegate?
+    let oAuth2Service: OAuth2Service? = OAuth2Service.shared
     override func viewDidLoad() {
            super.viewDidLoad()
            print("viewDidLoad called")
@@ -31,6 +32,7 @@ final class AuthViewController: UIViewController{
 
 extension AuthViewController: WebViewViewControllerDelegate{
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        oAuth2Service?.fetchOAuthToken(code: code) { result in }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
