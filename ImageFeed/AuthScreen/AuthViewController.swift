@@ -8,8 +8,13 @@
 import Foundation
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func didAuthenticate(_ vc: AuthViewController)
+}
+
 final class AuthViewController: UIViewController{
-    weak var delegate: WebViewViewControllerDelegate?
+    weak var webViewControllerDelegate: WebViewViewControllerDelegate?
+    weak var authViewControllerDelegate: AuthViewControllerDelegate?
     let oAuth2Service: OAuth2Service? = OAuth2Service.shared
     override func viewDidLoad() {
            super.viewDidLoad()
@@ -19,7 +24,7 @@ final class AuthViewController: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         super.prepare(for: segue, sender: sender)
-        self.delegate = self
+        self.webViewControllerDelegate = self
     }
     
     private func configureBackButton() {
@@ -32,7 +37,16 @@ final class AuthViewController: UIViewController{
 
 extension AuthViewController: WebViewViewControllerDelegate{
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        oAuth2Service?.fetchOAuthToken(code: code) { result in }
+        oAuth2Service?.fetchOAuthToken(code: code) { result in
+            switch result{
+            case .success(let token):
+                self.authViewControllerDelegate?.didAuthenticate(self)
+                print("token successfully received")
+            case .failure(let error):
+                print("Error: token not received")
+            }
+            
+        }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {

@@ -25,6 +25,7 @@
 		3288CB892BF3BA76006B5BCC /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3288CB882BF3BA76006B5BCC /* SF-Pro.ttf */; };
 		32A67D602C14A6B200405408 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D5F2C14A6B200405408 /* OAuth2Service.swift */; };
 		32A67D632C15DAD600405408 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D622C15DAD600405408 /* URLSession+data.swift */; };
+		32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D642C19B83D00405408 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		3288CB882BF3BA76006B5BCC /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		32A67D5F2C14A6B200405408 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		32A67D622C15DAD600405408 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
+		32A67D642C19B83D00405408 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				3276056D2C0F0C45003E241A /* AuthViewController.swift */,
 				3276056F2C0F1495003E241A /* WebViewViewController.swift */,
+				32A67D642C19B83D00405408 /* SplashViewController.swift */,
 			);
 			path = AuthScreen;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				3288CB582BE4F5A8006B5BCC /* ImagesListViewController.swift in Sources */,
 				3288CB842BF12A17006B5BCC /* ImagesListCell.swift in Sources */,
 				32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */,
+				32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */,
 				3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */,
 				3276056E2C0F0C45003E241A /* AuthViewController.swift in Sources */,
 				3276056B2C0CA279003E241A /* Constants.swift in Sources */,
