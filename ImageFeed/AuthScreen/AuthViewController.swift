@@ -10,21 +10,28 @@ import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject {
     func didAuthenticate(_ vc: AuthViewController)
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
 }
 
 final class AuthViewController: UIViewController{
-    weak var webViewControllerDelegate: WebViewViewControllerDelegate?
-    weak var authViewControllerDelegate: AuthViewControllerDelegate?
-    let oAuth2Service: OAuth2Service? = OAuth2Service.shared
+    private let ShowWebViewSegueIdentifier = "ShowWebView"
+    weak var delegate: AuthViewControllerDelegate?
+    let oauth2Service = OAuth2Service.shared
     override func viewDidLoad() {
            super.viewDidLoad()
            print("viewDidLoad called")
            configureBackButton()
        }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        super.prepare(for: segue, sender: sender)
-        self.webViewControllerDelegate = self
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowWebViewSegueIdentifier {
+            guard
+                let webViewViewController = segue.destination as? WebViewViewController
+            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
     }
     
     private func configureBackButton() {
@@ -37,19 +44,11 @@ final class AuthViewController: UIViewController{
 
 extension AuthViewController: WebViewViewControllerDelegate{
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        oAuth2Service?.fetchOAuthToken(code: code) { result in
-            switch result{
-            case .success(let token):
-                self.authViewControllerDelegate?.didAuthenticate(self)
-                print("token successfully received")
-            case .failure(let error):
-                print("Error: token not received")
-            }
-            
-        }
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }
+
