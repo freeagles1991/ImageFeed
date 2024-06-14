@@ -6,23 +6,6 @@
 //
 
 import Foundation
-
-struct OAuthTokenResponseBody: Decodable {
-    let accessToken: String
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-    }
-    
-    static func decodeTokenResponse(from data: Data) -> Result<String, Error> {
-        do {
-            let response = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-            return .success(response.accessToken)
-        } catch {
-            return .failure(error)
-        }
-    }
-}
     
 final class OAuth2Service {
     static let shared = OAuth2Service()
@@ -63,54 +46,37 @@ final class OAuth2Service {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
+        let task = URLSession.shared.data(for: request) { result in
+            switch result {
+            case .success(let data):
+                let decodeResult = OAuthTokenResponseBody.decodeTokenResponse(from: data)
+                switch decodeResult {
+                case .success(let token):
+                    self.oAuth2TokenStorage.token = token
+                    DispatchQueue.main.async {
+                        completion(.success(token))
+                    }
+                    print("OAuth token received: \(token)")
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                    print("Error during token decoding")
                 }
-                print("Error fetching OAuth token: \(error)")
-                return
-            }
-            
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(.failure(NetworkError.urlSessionError))
-                }
-                print("No data received")
-                return
-            }
-            
-            let decodeResult = OAuthTokenResponseBody.decodeTokenResponse(from: data)
-            switch decodeResult {
-            case .success(let token):
-                self.oAuth2TokenStorage.token = token
-                DispatchQueue.main.async {
-                    completion(.success(token))
-                }
-                print("OAuth token received: \(token)")
             case .failure(let error):
-                DispatchQueue.main.async {
-                    completion(.failure(error))
+                switch error {
+                case NetworkError.httpStatusCode(let statusCode):
+                    print("HTTP Error: status-code \(statusCode)")
+                case NetworkError.urlRequestError(let requestError):
+                    print("Request error: \(requestError.localizedDescription)")
+                case NetworkError.urlSessionError:
+                    print("URLSession Error")
+                default:
+                    print("Unknown error: \(error.localizedDescription)")
                 }
-                print("Error decoding OAuth token: \(error)")
             }
         }
         task.resume()
-    }
-}
-
-final class OAuth2TokenStorage {
-    private let tokenKey = "bearerToken"
-    
-    var token: String? {
-        get {
-            return UserDefaults.standard.string(forKey: tokenKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: tokenKey)
-        }
     }
 }
 

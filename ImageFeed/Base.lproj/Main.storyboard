@@ -222,11 +222,11 @@
         <!--Navigation Controller-->
         <scene sceneID="yYw-eH-M40">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GXd-oo-Fy2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="GXd-oo-Fy2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="IBL-rZ-FIb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EhJ-CN-T8Q">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -241,7 +241,7 @@
         <!--AuthViewController-->
         <scene sceneID="Fg8-yk-c5B">
             <objects>
-                <viewController title="AuthViewController" id="AZq-gP-ILV" userLabel="AuthViewController" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="AuthViewController" modalPresentationStyle="fullScreen" id="AZq-gP-ILV" userLabel="AuthViewController" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="V9T-5N-NaT">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -295,7 +295,7 @@
         <!--WebViewViewController-->
         <scene sceneID="pwA-3a-7PK">
             <objects>
-                <viewController title="WebViewViewController" id="C3W-OV-Jbt" userLabel="WebViewViewController" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="WebViewViewController" modalPresentationStyle="fullScreen" id="C3W-OV-Jbt" userLabel="WebViewViewController" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yzH-Ek-W25">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -338,12 +338,12 @@
         <!--SplashViewController-->
         <scene sceneID="W8o-ni-cbD">
             <objects>
-                <viewController title="SplashViewController" id="qaM-Tv-mTa" userLabel="SplashViewController" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="SplashViewController" modalPresentationStyle="fullScreen" id="qaM-Tv-mTa" userLabel="SplashViewController" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UnV-wH-Tss">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Lrg-Mu-a3V"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="colorBlack"/>
                     </view>
                     <connections>
                         <segue destination="GXd-oo-Fy2" kind="show" identifier="showAuthenticationScreen" id="qsS-KS-SGR"/>
