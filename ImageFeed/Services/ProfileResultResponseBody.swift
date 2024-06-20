@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ProfileResultResponseBody: Codable {
+struct ProfileResultResponseBody: Decodable {
     let username: String
     let firstName: String
     let lastName: String
-    let bio: String
+    let bio: String?
     
     enum CodingKeys: String, CodingKey {
             case username
@@ -34,7 +34,7 @@ struct ProfileResultResponseBody: Codable {
             username: self.username,
             name: "\(self.firstName) \(self.lastName)",
             loginName: "@\(self.username)",
-            bio: self.bio
+            bio: self.bio ?? "empty"
         )
     }
 }

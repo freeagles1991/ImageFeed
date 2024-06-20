@@ -52,7 +52,6 @@ final class ProfileService{
                 switch decodeResult {
                 case .success(let profileResult):
                     let profile = profileResult.toProfile()
-                    print(profile)
                     DispatchQueue.main.async {
                         completion(.success(profile))
                     }
@@ -81,18 +80,4 @@ final class ProfileService{
         task.resume()
     }
     
-    func saveDataToFile(data: Data, fileName: String) {
-        let fileManager = FileManager.default
-        do {
-            // Получаем URL для сохранения файла в директории документов
-            let documentsURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let fileURL = documentsURL.appendingPathComponent(fileName)
-            
-            // Записываем данные в файл
-            try data.write(to: fileURL)
-            print("Data saved to file: \(fileURL.path)")
-        } catch {
-            print("Failed to save data to file: \(error.localizedDescription)")
-        }
-    }
 }
