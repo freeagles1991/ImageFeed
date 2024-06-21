@@ -7,12 +7,14 @@
 
 import Foundation
 import UIKit
+import ProgressHUD
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code)
+            UIBlockingProgressHUD.show()
         }
     }
     
@@ -21,6 +23,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
+                UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
             case .failure:
                 // TODO [Sprint 11]

@@ -19,6 +19,10 @@ final class ProfileViewController: UIViewController {
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
+    private let profileService = ProfileService.shared
+    let oauth2TokenStorage = OAuth2TokenStorage()
+    let profileStorage = ProfileStorage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupProfileImageView()
@@ -26,6 +30,7 @@ final class ProfileViewController: UIViewController {
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
+        self.fetchProfile()
         
     }
     private func setupProfileImageView(){
@@ -100,6 +105,30 @@ final class ProfileViewController: UIViewController {
         exitButtonView.widthAnchor.constraint(equalToConstant: 24).isActive = true
         exitButtonView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         exitButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
+    }
+    
+    private func fetchProfile(){
+        guard let token = oauth2TokenStorage.token
+        else {
+            print("No token")
+            return }
+        profileService.fetchProfile(token){ [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                updateProfile()
+                print("Profile was updated success")
+            case .failure:
+                // TODO [Sprint 11]
+            break
+            }
+        }
+    }
+    
+    private func updateProfile(){
+        let profile = profileStorage.getProfile()
+        nameLabel?.text = profile.name
+        statusLabel?.text = profile.bio
     }
     
     @objc

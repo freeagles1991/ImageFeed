@@ -11,6 +11,10 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     private init() {}
     
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
@@ -38,6 +42,23 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        
+        if task != nil {
+            if lastCode != code {
+                task?.cancel()
+            } else {
+                completion(.failure(NetworkError.urlSessionError))
+                return
+            }
+        } else {
+            if lastCode == code {
+                completion(.failure(NetworkError.urlSessionError))
+                return
+            }
+        }
+        lastCode = code
+        
         guard let request = makeOAuthTokenRequest(code: code) else {
             DispatchQueue.main.async {
                 completion(.failure(NetworkError.urlSessionError))
@@ -75,7 +96,10 @@ final class OAuth2Service {
                     print("Unknown error: \(error.localizedDescription)")
                 }
             }
+            self.task = nil
+            self.lastCode = nil
         }
+        self.task = task
         task.resume()
     }
 }
