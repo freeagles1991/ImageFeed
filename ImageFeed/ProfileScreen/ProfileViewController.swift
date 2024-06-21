@@ -11,7 +11,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     private var nameLabel: UILabel?
-    private var emailLabel: UILabel?
+    private var loginLabel: UILabel?
     private var statusLabel: UILabel?
     private var profileImageView = UIImageView()
     private let profileImage = UIImage(named: "ProfilePhoto")
@@ -19,7 +19,7 @@ final class ProfileViewController: UIViewController {
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
-    private let profileService = ProfileService.shared
+    let profileService = ProfileService.shared
     let oauth2TokenStorage = OAuth2TokenStorage()
     let profileStorage = ProfileStorage()
     
@@ -30,8 +30,8 @@ final class ProfileViewController: UIViewController {
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
-        self.fetchProfile()
-        
+        guard let profile = profileService.profile else { return }
+        self.updateProfileDetails(profile: profile)
     }
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)
@@ -74,7 +74,7 @@ final class ProfileViewController: UIViewController {
         label.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
         label.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor).isActive = true
         
-        self.emailLabel = label
+        self.loginLabel = label
     }
     
     private func setupStatusLabel(){
@@ -86,7 +86,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
         
-        guard let emailLabel = self.emailLabel else { return }
+        guard let emailLabel = self.loginLabel else { return }
         label.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 8).isActive = true
         label.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor).isActive = true
         
@@ -107,28 +107,10 @@ final class ProfileViewController: UIViewController {
         exitButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
     }
     
-    private func fetchProfile(){
-        guard let token = oauth2TokenStorage.token
-        else {
-            print("No token")
-            return }
-        profileService.fetchProfile(token){ [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                updateProfile()
-                print("Profile was updated success")
-            case .failure:
-                // TODO [Sprint 11]
-            break
-            }
-        }
-    }
-    
-    private func updateProfile(){
-        let profile = profileStorage.getProfile()
+    private func updateProfileDetails(profile: Profile){
         nameLabel?.text = profile.name
         statusLabel?.text = profile.bio
+        loginLabel?.text = profile.loginName
     }
     
     @objc

@@ -14,6 +14,8 @@ final class ProfileService{
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     
+    private(set) var profile: Profile?
+    
     let oauth2TokenStorage = OAuth2TokenStorage()
     
     private func makeProfileRequest() -> URLRequest? {
@@ -51,7 +53,8 @@ final class ProfileService{
                 let decodeResult = ProfileResultResponseBody.decodeProfileResponse(from: data)
                 switch decodeResult {
                 case .success(let profileResult):
-                    let profile = profileResult.toProfile()
+                    self.profile = profileResult.toProfile()
+                    guard let profile = self.profile else { return }
                     DispatchQueue.main.async {
                         completion(.success(profile))
                     }
