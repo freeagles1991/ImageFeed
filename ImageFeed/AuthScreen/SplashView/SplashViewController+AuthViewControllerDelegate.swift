@@ -39,7 +39,29 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
+                guard let username = profileService.profile?.username else { return }
+                self.profileImageService.fetchProfileImageURL(username: username) { result in
+                    switch result{
+                    case .success:
+                        print("Линк загружен")
+                    case .failure:
+                        //TODO
+                        break
+                    }}
                 self.switchToTabBarController()
+            case .failure:
+                // TODO [Sprint 11] Покажите ошибку получения профиля
+                break
+            }
+        }
+    }
+    
+    func fetchImageProfile(_ username: String){
+        profileImageService.fetchProfileImageURL(username: username) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                print("Успешно загружен аватар")
             case .failure:
                 // TODO [Sprint 11] Покажите ошибку получения профиля
                 break

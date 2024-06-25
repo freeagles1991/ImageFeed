@@ -20,8 +20,10 @@ final class ProfileViewController: UIViewController {
     private let statusString = "Hello, world!"
     
     let profileService = ProfileService.shared
+    let profileImageService = ProfileImageService.shared
     let oauth2TokenStorage = OAuth2TokenStorage()
-    let profileStorage = ProfileStorage()
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,16 @@ final class ProfileViewController: UIViewController {
         self.setupExitbutton()
         guard let profile = profileService.profile else { return }
         self.updateProfileDetails(profile: profile)
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                       object: nil,
+                       queue: .main
+                   ) { [weak self] _ in
+                       guard let self = self else { return }
+                       self.updateAvatar()
+                   }
+               updateAvatar()
     }
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)
@@ -112,6 +124,14 @@ final class ProfileViewController: UIViewController {
         statusLabel?.text = profile.bio
         loginLabel?.text = profile.loginName
     }
+    
+    private func updateAvatar() {
+            guard
+                let profileImageURL = profileImageService.smallAvatarURL,
+                let url = URL(string: profileImageURL)
+            else { return }
+            // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
+        }
     
     @objc
     private func didTapButton() {
