@@ -41,6 +41,7 @@
 		32A67D832C232BDC00405408 /* ProfileBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D822C232BDC00405408 /* ProfileBody.swift */; };
 		32A67D892C29A88200405408 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D882C29A88200405408 /* ProfileImageService.swift */; };
 		32A67D8B2C29B6C400405408 /* ProfileImageResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D8A2C29B6C400405408 /* ProfileImageResponseBody.swift */; };
+		32A67D8D2C2AE22D00405408 /* URLSession+objectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		32A67D822C232BDC00405408 /* ProfileBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBody.swift; sourceTree = "<group>"; };
 		32A67D882C29A88200405408 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		32A67D8A2C29B6C400405408 /* ProfileImageResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageResponseBody.swift; sourceTree = "<group>"; };
+		32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+objectTask.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				32A67D622C15DAD600405408 /* URLSession+data.swift */,
+				32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				32A67D892C29A88200405408 /* ProfileImageService.swift in Sources */,
 				32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */,
 				32A67D742C1C6D6500405408 /* SplashViewController+AuthViewControllerDelegate.swift in Sources */,
+				32A67D8D2C2AE22D00405408 /* URLSession+objectTask.swift in Sources */,
 				32A67D6A2C1C6B0900405408 /* WebViewConstants.swift in Sources */,
 				32A67D762C1C6E6000405408 /* OAuthTokenResponseBody.swift in Sources */,
 				3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */,

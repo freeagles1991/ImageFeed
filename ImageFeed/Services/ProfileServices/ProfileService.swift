@@ -47,25 +47,19 @@ final class ProfileService{
             return
         }
         
-        let task = URLSession.shared.data(for: request) { result in
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<ProfileResultResponseBody, Error>) in
             switch result {
-            case .success(let data):
-                let decodeResult = ProfileResultResponseBody.decodeProfileResponse(from: data)
-                switch decodeResult {
-                case .success(let profileResult):
-                    self.profile = profileResult.toProfile()
-                    guard let profile = self.profile else { return }
-                    DispatchQueue.main.async {
-                        completion(.success(profile))
-                    }
-                    print("Profile received")
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        completion(.failure(error))
-                    }
-                    print("Error during profile decoding")
+            case .success(let responseBody):
+                self.profile = responseBody.toProfile()
+                guard let profile = self.profile else { return }
+                DispatchQueue.main.async {
+                    completion(.success(profile))
                 }
+                print("Profile received")
             case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
                 switch error {
                 case NetworkError.httpStatusCode(let statusCode):
                     print("HTTP Error: status-code \(statusCode)")

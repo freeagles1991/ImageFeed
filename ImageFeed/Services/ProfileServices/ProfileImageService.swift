@@ -33,29 +33,23 @@ final class ProfileImageService{
             return
         }
         
-        let task = URLSession.shared.data(for: request) { result in
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<ProfileImageResponseBody, Error>) in
             switch result {
-            case .success(let data):
-                let decodeResult = ProfileImageResponseBody.decodeUserAvatarResponse(from: data)
-                switch decodeResult {
-                case .success(let profileImages):
-                    self.smallAvatarURL = profileImages.small
-                    guard let smallAvatarURL = self.smallAvatarURL else { return }
-                    DispatchQueue.main.async {
-                        completion(.success(smallAvatarURL))
-                        NotificationCenter.default.post(
-                                name: ProfileImageService.didChangeNotification,
-                                object: self,
-                                userInfo: ["URL": smallAvatarURL])
-                    }
-                    print("Profile received")
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        completion(.failure(error))
-                    }
-                    print("Error during profile decoding")
+            case .success(let responseBody):
+                self.smallAvatarURL = responseBody.profileImage.small
+                guard let smallAvatarURL = self.smallAvatarURL else { return }
+                DispatchQueue.main.async {
+                    completion(.success(smallAvatarURL))
+                    NotificationCenter.default.post(
+                            name: ProfileImageService.didChangeNotification,
+                            object: self,
+                            userInfo: ["URL": smallAvatarURL])
                 }
+                print("Profile received")
             case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
                 switch error {
                 case NetworkError.httpStatusCode(let statusCode):
                     print("HTTP Error: status-code \(statusCode)")
