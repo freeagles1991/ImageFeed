@@ -43,7 +43,7 @@ final class ProfileService{
             DispatchQueue.main.async {
                 completion(.failure(NetworkError.urlSessionError))
             }
-            print("Invalid request")
+            print("ProfileService.fetchProfile: сессия прервана")
             return
         }
         
@@ -55,21 +55,22 @@ final class ProfileService{
                 DispatchQueue.main.async {
                     completion(.success(profile))
                 }
-                print("Profile received")
+                print("ProfileService.fetchProfile: профиль успешно загружен")
             case .failure(let error):
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
                 switch error {
                 case NetworkError.httpStatusCode(let statusCode):
-                    print("HTTP Error: status-code \(statusCode)")
+                    print("ProfileService.fetchProfile. HTTP Error: status-code \(statusCode)")
                 case NetworkError.urlRequestError(let requestError):
-                    print("Request error: \(requestError.localizedDescription)")
+                    print("ProfileService.fetchProfile. Request error: \(requestError.localizedDescription)")
                 case NetworkError.urlSessionError:
-                    print("URLSession Error")
+                    print("ProfileService.fetchProfile. URLSession Error")
                 default:
-                    print("Unknown error: \(error.localizedDescription)")
+                    print("ProfileService.fetchProfile. Unknown error: \(error.localizedDescription)")
                 }
+                print("ProfileService.fetchProfile. Ошибка при декодировании данных")
             }
             self.task = nil
         }

@@ -63,7 +63,7 @@ final class OAuth2Service {
               DispatchQueue.main.async {
                   completion(.failure(NetworkError.urlSessionError))
               }
-              print("Invalid request")
+              print("OAuth2Service.fetchOAuthToken: сессия прервана")
               return
           }
           
@@ -75,22 +75,22 @@ final class OAuth2Service {
                   DispatchQueue.main.async {
                       completion(.success(token))
                   }
-                  print("OAuth token received: \(token)")
+                  print("OAuth2Service.fetchOAuthToken: OAuth токен получен: \(token)")
               case .failure(let error):
                   DispatchQueue.main.async {
                       completion(.failure(error))
                   }
                   switch error {
                   case NetworkError.httpStatusCode(let statusCode):
-                      print("HTTP Error: status-code \(statusCode)")
+                      print("OAuth2Service.fetchOAuthToken. HTTP Error: status-code \(statusCode)")
                   case NetworkError.urlRequestError(let requestError):
-                      print("Request error: \(requestError.localizedDescription)")
+                      print("OAuth2Service.fetchOAuthToken. Request error: \(requestError.localizedDescription)")
                   case NetworkError.urlSessionError:
-                      print("URLSession Error")
+                      print("OAuth2Service.fetchOAuthToken. URLSession Error")
                   default:
-                      print("Unknown error: \(error.localizedDescription)")
+                      print("OAuth2Service.fetchOAuthToken. Unknown error: \(error.localizedDescription)")
                   }
-                  print("Error during token decoding")
+                  print("OAuth2Service.fetchOAuthToken. Ошибка при декодировании токена")
               }
               self.task = nil
               self.lastCode = nil

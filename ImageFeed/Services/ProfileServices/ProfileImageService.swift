@@ -29,7 +29,7 @@ final class ProfileImageService{
             DispatchQueue.main.async {
                 completion(.failure(NetworkError.urlSessionError))
             }
-            print("Invalid request")
+            print("ProfileImageService.fetchProfileImageURL: сессия прервана")
             return
         }
         
@@ -45,21 +45,22 @@ final class ProfileImageService{
                             object: self,
                             userInfo: ["URL": smallAvatarURL])
                 }
-                print("Profile received")
+                print("ProfileImageService.fetchProfileImageURL: аватар пользователя успешно загружен")
             case .failure(let error):
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
                 switch error {
                 case NetworkError.httpStatusCode(let statusCode):
-                    print("HTTP Error: status-code \(statusCode)")
+                    print("ProfileImageService.fetchProfileImageURL. HTTP Error: status-code \(statusCode)")
                 case NetworkError.urlRequestError(let requestError):
-                    print("Request error: \(requestError.localizedDescription)")
+                    print("ProfileImageService.fetchProfileImageURL. Request error: \(requestError.localizedDescription)")
                 case NetworkError.urlSessionError:
-                    print("URLSession Error")
+                    print("ProfileImageService.fetchProfileImageURL. URLSession Error")
                 default:
-                    print("Unknown error: \(error.localizedDescription)")
+                    print("ProfileImageService.fetchProfileImageURL. Unknown error: \(error.localizedDescription)")
                 }
+                print("ProfileImageService.fetchProfileImageURL: Ошибка при декодировании ссылки на аватар пользователя")
             }
             self.task = nil
         }

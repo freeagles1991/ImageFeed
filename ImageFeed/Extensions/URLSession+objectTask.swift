@@ -18,8 +18,10 @@ extension URLSession {
             case .success(let data):
                 do {
                     let decodedObject = try decoder.decode(T.self, from: data)
+                        print("URLSession.objectTask: декодирование данных успешно")
                         completion(.success(decodedObject))
                     } catch {
+                        print("URLSession.objectTask. Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
                         completion(.failure(error))
                     }
             case .failure(let error):
