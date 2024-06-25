@@ -25,7 +25,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 UIBlockingProgressHUD.dismiss()
             case .failure:
-                // TODO [Sprint 11]
+                self.showAlert()
                 break
             }
         }
@@ -45,11 +45,10 @@ extension SplashViewController: AuthViewControllerDelegate {
                     case .success:
                         print("User avatar recieved")
                     case .failure:
-                        //TODO
                         break
                     }}
             case .failure:
-                // TODO [Sprint 11] Покажите ошибку получения профиля
+                self.showAlert()
                 break
             }
         }
@@ -61,7 +60,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 print("Успешно загружен аватар")
             case .failure:
-                // TODO [Sprint 11] Покажите ошибку получения профиля
+                self.showAlert()
                 break
             }
         }
@@ -74,5 +73,18 @@ extension SplashViewController: AuthViewControllerDelegate {
         self.fetchProfile(token)
         
         //self.switchToTabBarController()
+    }
+    
+    private  func showAlert() {
+        let alertController = UIAlertController(title: "Ошибка", message: "Что-то пошло не так", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+            print("OK button tapped")
+        }
+        
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
