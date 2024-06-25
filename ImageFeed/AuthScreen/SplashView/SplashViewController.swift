@@ -22,7 +22,7 @@ final class SplashViewController: UIViewController{
             guard let token = tokenStorage.token else { return }
             self.fetchProfile(token)
             //
-            self.switchToTabBarController()
+            //self.switchToTabBarController()
         } else {
             performSegue(withIdentifier: segueIdentifier, sender: nil)
         }

@@ -74,7 +74,7 @@ final class ProfileImageService{
     }
     
     private func makeProfileAvatarRequest(_ username: String) -> URLRequest?{
-        guard let url = URL(string: "https://api.unsplash.com/user/\(username)") else {
+        guard let url = URL(string: "https://api.unsplash.com/users/\(username)") else {
             print("Invalid base URL")
             return nil
         }

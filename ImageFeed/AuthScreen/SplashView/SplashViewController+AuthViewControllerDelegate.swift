@@ -19,12 +19,11 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func fetchOAuthToken(_ code: String) {
-        oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
-            guard let self = self else { return }
+        oauth2Service.fetchOAuthToken(code: code) { result in
+            //guard let self = self else { return }
             switch result {
             case .success:
                 UIBlockingProgressHUD.dismiss()
-                self.switchToTabBarController()
             case .failure:
                 // TODO [Sprint 11]
                 break
@@ -39,16 +38,16 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
+                self.switchToTabBarController()
                 guard let username = profileService.profile?.username else { return }
                 self.profileImageService.fetchProfileImageURL(username: username) { result in
                     switch result{
                     case .success:
-                        print("Линк загружен")
+                        print("User avatar recieved")
                     case .failure:
                         //TODO
                         break
                     }}
-                self.switchToTabBarController()
             case .failure:
                 // TODO [Sprint 11] Покажите ошибку получения профиля
                 break
@@ -57,8 +56,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     func fetchImageProfile(_ username: String){
-        profileImageService.fetchProfileImageURL(username: username) { [weak self] result in
-            guard let self = self else { return }
+        profileImageService.fetchProfileImageURL(username: username) { result in
             switch result {
             case .success:
                 print("Успешно загружен аватар")
