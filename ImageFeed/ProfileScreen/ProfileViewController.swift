@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -130,7 +131,15 @@ final class ProfileViewController: UIViewController {
                 let profileImageURL = profileImageService.smallAvatarURL,
                 let url = URL(string: profileImageURL)
             else { return }
-            // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
+        profileImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)
+        profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholder.jpeg"),
+            options: [.processor(processor)])
+        
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
         }
     
     @objc
