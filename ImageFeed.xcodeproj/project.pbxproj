@@ -33,7 +33,6 @@
 		32A67D712C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D702C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift */; };
 		32A67D742C1C6D6500405408 /* SplashViewController+AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D732C1C6D6500405408 /* SplashViewController+AuthViewControllerDelegate.swift */; };
 		32A67D762C1C6E6000405408 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D752C1C6E6000405408 /* OAuthTokenResponseBody.swift */; };
-		32A67D782C1C6E9200405408 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D772C1C6E9200405408 /* OAuth2TokenStorage.swift */; };
 		32A67D7B2C1CA5E600405408 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 32A67D7A2C1CA5E600405408 /* ProgressHUD */; };
 		32A67D7D2C21B2FD00405408 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D7C2C21B2FD00405408 /* UIBlockingProgressHUD.swift */; };
 		32A67D7F2C23266800405408 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D7E2C23266800405408 /* ProfileService.swift */; };
@@ -43,6 +42,7 @@
 		32A67D8B2C29B6C400405408 /* ProfileImageResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D8A2C29B6C400405408 /* ProfileImageResponseBody.swift */; };
 		32A67D8D2C2AE22D00405408 /* URLSession+objectTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */; };
 		32A67D902C2C383800405408 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 32A67D8F2C2C383800405408 /* Kingfisher */; };
+		32A67D932C2C481C00405408 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 32A67D922C2C481C00405408 /* SwiftKeychainWrapper */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,7 +93,6 @@
 		32A67D702C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthViewController+WebViewViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		32A67D732C1C6D6500405408 /* SplashViewController+AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashViewController+AuthViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		32A67D752C1C6E6000405408 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
-		32A67D772C1C6E9200405408 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		32A67D7C2C21B2FD00405408 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		32A67D7E2C23266800405408 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		32A67D802C2326ED00405408 /* ProfileResultResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResultResponseBody.swift; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 			files = (
 				32A67D902C2C383800405408 /* Kingfisher in Frameworks */,
 				32A67D7B2C1CA5E600405408 /* ProgressHUD in Frameworks */,
+				32A67D932C2C481C00405408 /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +289,6 @@
 			children = (
 				32A67D5F2C14A6B200405408 /* OAuth2Service.swift */,
 				32A67D752C1C6E6000405408 /* OAuthTokenResponseBody.swift */,
-				32A67D772C1C6E9200405408 /* OAuth2TokenStorage.swift */,
 			);
 			path = OAuthServices;
 			sourceTree = "<group>";
@@ -314,6 +313,7 @@
 			packageProductDependencies = (
 				32A67D7A2C1CA5E600405408 /* ProgressHUD */,
 				32A67D8F2C2C383800405408 /* Kingfisher */,
+				32A67D922C2C481C00405408 /* SwiftKeychainWrapper */,
 			);
 			productName = ImageFeed;
 			productReference = 3288CB502BE4F5A8006B5BCC /* ImageFeed.app */;
@@ -390,6 +390,7 @@
 			packageReferences = (
 				32A67D792C1CA5E600405408 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				32A67D8E2C2C383800405408 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				32A67D912C2C481C00405408 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			productRefGroup = 3288CB512BE4F5A8006B5BCC /* Products */;
 			projectDirPath = "";
@@ -470,7 +471,6 @@
 				32A67D762C1C6E6000405408 /* OAuthTokenResponseBody.swift in Sources */,
 				3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */,
 				3276056E2C0F0C45003E241A /* AuthViewController.swift in Sources */,
-				32A67D782C1C6E9200405408 /* OAuth2TokenStorage.swift in Sources */,
 				3276056B2C0CA279003E241A /* Constants.swift in Sources */,
 				32A67D6C2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift in Sources */,
 				32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */,
@@ -852,6 +852,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		32A67D912C2C481C00405408 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -864,6 +872,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 32A67D8E2C2C383800405408 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		32A67D922C2C481C00405408 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 32A67D912C2C481C00405408 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

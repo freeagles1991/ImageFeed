@@ -10,16 +10,15 @@ import UIKit
 
 final class SplashViewController: UIViewController{
     private let segueIdentifier = "showAuthenticationScreen"
-    let tokenStorage = OAuth2TokenStorage()
     let oauth2Service = OAuth2Service.shared
     let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if tokenStorage.token != nil {
+        if oauth2Service.getToken() != nil {
             //TO DO: здесь тестово обновляется профиль
-            guard let token = tokenStorage.token else { return }
+            guard let token = oauth2Service.getToken() else { return }
             self.fetchProfile(token)
             //
             //self.switchToTabBarController()

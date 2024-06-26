@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
     
 final class OAuth2Service {
     static let shared = OAuth2Service()
@@ -14,8 +15,6 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    
-    private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard let baseURL = URL(string: "https://unsplash.com") else {
@@ -71,7 +70,12 @@ final class OAuth2Service {
               switch result {
               case .success(let responseBody):
                   let token = responseBody.accessToken
-                  self.oAuth2TokenStorage.token = token
+                  let isSuccess = KeychainWrapper.standard.set(token, forKey: "Auth token")
+                  guard isSuccess else {
+                      print("OAuth2Service.fetchOAuthToken: токен не записан в KeyChain")
+                            return
+                  }
+
                   DispatchQueue.main.async {
                       completion(.success(token))
                   }
@@ -98,34 +102,11 @@ final class OAuth2Service {
         self.task = task
         task.resume()
     }
+    
+    func getToken() -> String?{
+        let token: String? = KeychainWrapper.standard.string(forKey: "Auth token")
+        return token
+    }
 }
 
-
-//let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
-//    switch result {
-//    case .success(let decodeObject):
-//        let token = decodeObject.accessToken
-//        self?.oAuth2TokenStorage.token = token
-//        DispatchQueue.main.async {
-//            completion(.success(token))
-//        }
-//        print("OAuth token received: \(token)")
-//    case .failure(let error):
-//        DispatchQueue.main.async {
-//            completion(.failure(error))
-//        }
-//        switch error {
-//        case NetworkError.httpStatusCode(let statusCode):
-//            print("HTTP Error: status-code \(statusCode)")
-//        case NetworkError.urlRequestError(let requestError):
-//            print("Request error: \(requestError.localizedDescription)")
-//        case NetworkError.urlSessionError:
-//            print("URLSession Error")
-//        default:
-//            print("Unknown error: \(error.localizedDescription)")
-//        }
-//    }
-//    self.task = nil
-//    self.lastCode = nil
-//}
 

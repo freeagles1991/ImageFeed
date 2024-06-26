@@ -12,11 +12,10 @@ final class ProfileService{
     private init() {}
     
     private let urlSession = URLSession.shared
+    private let oauthService = OAuth2Service.shared
     private var task: URLSessionTask?
     
     private(set) var profile: Profile?
-    
-    let oauth2TokenStorage = OAuth2TokenStorage()
     
     private func makeProfileRequest() -> URLRequest? {
         guard let url = URL(string: "https://api.unsplash.com/me") else {
@@ -26,7 +25,7 @@ final class ProfileService{
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        guard let token = oauth2TokenStorage.token
+        guard let token = oauthService.getToken()
         else {
             print("No token")
             return nil}

@@ -22,7 +22,6 @@ final class ProfileViewController: UIViewController {
     
     let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
-    let oauth2TokenStorage = OAuth2TokenStorage()
     
     private var profileImageServiceObserver: NSObjectProtocol?
     

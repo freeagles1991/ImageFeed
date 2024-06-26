@@ -12,9 +12,9 @@ final class ProfileImageService{
     private init() {}
     
     private let urlSession = URLSession.shared
+    private let oauthService = OAuth2Service.shared
     private var task: URLSessionTask?
     
-    private let oauth2TokenStorage = OAuth2TokenStorage()
     private (set) var smallAvatarURL: String?
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
@@ -76,7 +76,7 @@ final class ProfileImageService{
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        guard let token = oauth2TokenStorage.token
+        guard let token = oauthService.getToken()
         else {
             print("No token")
             return nil}
