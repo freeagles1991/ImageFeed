@@ -20,7 +20,6 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func fetchOAuthToken(_ code: String) {
         oauth2Service.fetchOAuthToken(code: code) { result in
-            //guard let self = self else { return }
             switch result {
             case .success:
                 UIBlockingProgressHUD.dismiss()
@@ -72,7 +71,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         guard let token = oauth2Service.getToken() else { return }
         self.fetchProfile(token)
         
-        //self.switchToTabBarController()
+        self.switchToTabBarController()
     }
     
     private  func showAlert() {

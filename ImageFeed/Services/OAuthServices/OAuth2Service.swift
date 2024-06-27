@@ -107,6 +107,11 @@ final class OAuth2Service {
         let token: String? = KeychainWrapper.standard.string(forKey: "Auth token")
         return token
     }
+    
+    func clearToken() {
+        guard KeychainWrapper.standard.string(forKey: "Auth token") != nil else {  return }
+        KeychainWrapper.standard.removeObject(forKey: "Auth token")
+    }
 }
 
 

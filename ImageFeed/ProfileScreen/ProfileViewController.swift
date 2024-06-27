@@ -45,6 +45,7 @@ final class ProfileViewController: UIViewController {
                    }
                updateAvatar()
     }
+    
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
