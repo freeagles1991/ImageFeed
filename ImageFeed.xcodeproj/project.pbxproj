@@ -44,6 +44,9 @@
 		32A67D902C2C383800405408 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 32A67D8F2C2C383800405408 /* Kingfisher */; };
 		32A67D932C2C481C00405408 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 32A67D922C2C481C00405408 /* SwiftKeychainWrapper */; };
 		32A67D952C2D724300405408 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D942C2D724300405408 /* TabBarController.swift */; };
+		32A67D9A2C2EBEE500405408 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D992C2EBEE500405408 /* Photo.swift */; };
+		32A67D9C2C2EC11E00405408 /* PhotoResultBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D9B2C2EC11E00405408 /* PhotoResultBody.swift */; };
+		32A67D9E2C2EC8B000405408 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D9D2C2EC8B000405408 /* ImagesListService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,9 @@
 		32A67D8A2C29B6C400405408 /* ProfileImageResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageResponseBody.swift; sourceTree = "<group>"; };
 		32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+objectTask.swift"; sourceTree = "<group>"; };
 		32A67D942C2D724300405408 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		32A67D992C2EBEE500405408 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		32A67D9B2C2EC11E00405408 /* PhotoResultBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResultBody.swift; sourceTree = "<group>"; };
+		32A67D9D2C2EC8B000405408 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +235,7 @@
 		32A67D5E2C14A67F00405408 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				32A67D962C2EBB4600405408 /* ImageListServices */,
 				32A67D872C29A85F00405408 /* OAuthServices */,
 				32A67D862C29A7F400405408 /* ProfileServices */,
 				32A67D7C2C21B2FD00405408 /* UIBlockingProgressHUD.swift */,
@@ -294,6 +301,16 @@
 				32A67D752C1C6E6000405408 /* OAuthTokenResponseBody.swift */,
 			);
 			path = OAuthServices;
+			sourceTree = "<group>";
+		};
+		32A67D962C2EBB4600405408 /* ImageListServices */ = {
+			isa = PBXGroup;
+			children = (
+				32A67D9B2C2EC11E00405408 /* PhotoResultBody.swift */,
+				32A67D992C2EBEE500405408 /* Photo.swift */,
+				32A67D9D2C2EC8B000405408 /* ImagesListService.swift */,
+			);
+			path = ImageListServices;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,6 +478,7 @@
 			files = (
 				32A67D672C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift in Sources */,
 				32A67D712C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift in Sources */,
+				32A67D9C2C2EC11E00405408 /* PhotoResultBody.swift in Sources */,
 				32A67D6F2C1C6C8B00405408 /* AuthViewControllerDelegateProtocol.swift in Sources */,
 				32A67D952C2D724300405408 /* TabBarController.swift in Sources */,
 				3288CB582BE4F5A8006B5BCC /* ImagesListViewController.swift in Sources */,
@@ -483,9 +501,11 @@
 				32A67D8B2C29B6C400405408 /* ProfileImageResponseBody.swift in Sources */,
 				32A67D832C232BDC00405408 /* ProfileBody.swift in Sources */,
 				32A67D602C14A6B200405408 /* OAuth2Service.swift in Sources */,
+				32A67D9E2C2EC8B000405408 /* ImagesListService.swift in Sources */,
 				3288CB562BE4F5A8006B5BCC /* SceneDelegate.swift in Sources */,
 				32A67D7D2C21B2FD00405408 /* UIBlockingProgressHUD.swift in Sources */,
 				32A67D7F2C23266800405408 /* ProfileService.swift in Sources */,
+				32A67D9A2C2EBEE500405408 /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
