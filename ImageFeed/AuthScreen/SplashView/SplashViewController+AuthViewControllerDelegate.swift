@@ -14,6 +14,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code)
+            guard let token = oauth2Service.getToken() else { return }
+            self.fetchProfile(token)
             UIBlockingProgressHUD.show()
         }
     }
@@ -23,6 +25,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success:
                 UIBlockingProgressHUD.dismiss()
+                guard let token = self.oauth2Service.getToken() else { return }
+                self.fetchProfile(token)
             case .failure:
                 self.showAlert()
                 break
