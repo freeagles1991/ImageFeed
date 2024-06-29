@@ -65,6 +65,10 @@ final class ImagesListService{
                 DispatchQueue.main.async {
                     self.photos.append(contentsOf: newPhotos)
                     completion(.success(newPhotos))
+                    NotificationCenter.default.post(
+                        name: ImagesListService.didChangeNotification,
+                            object: self,
+                            userInfo: ["Photos": newPhotos])
                 }
                 print("ImagesListService.fetchPhotosNextPage: Фото загружены")
             case .failure(let error):
