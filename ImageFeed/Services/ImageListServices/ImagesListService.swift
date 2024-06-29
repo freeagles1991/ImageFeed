@@ -11,12 +11,13 @@ final class ImagesListService{
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     
+    let oauthService = OAuth2Service.shared
     private var task: URLSessionTask?
     
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     private func makePhotosRequest(_ page: Int) -> URLRequest? {
-        guard let baseURL = URL(string: "https://unsplash.com") else {
+        guard let baseURL = URL(string: "https://api.unsplash.com") else {
             print("Invalid base URL")
             return nil
         }
@@ -31,7 +32,12 @@ final class ImagesListService{
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
+        guard let token = oauthService.getToken()
+        else {
+            print("No token")
+            return nil}
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
     
@@ -53,6 +59,8 @@ final class ImagesListService{
             print("ImagesListService.fetchPhotosNextPage: сессия прервана")
             return
         }
+        
+        print("\(request)")
         
         let task = URLSession.shared.objectTask(for: request) {(result: Result<[PhotoResultBody], Error>) in
             switch result {
@@ -85,7 +93,7 @@ final class ImagesListService{
                 default:
                     print("ImagesListService.fetchPhotosNextPage. Unknown error: \(error.localizedDescription)")
                 }
-                print("ImagesListService.fetchPhotosNextPage. Ошибка при декодировании токена")
+                print("ImagesListService.fetchPhotosNextPage. Ошибка при декодировании photo")
             }
             self.task = nil
         }

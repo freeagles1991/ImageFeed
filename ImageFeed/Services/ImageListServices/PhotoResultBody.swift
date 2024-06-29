@@ -21,7 +21,7 @@ struct PhotoResultBody: Codable{
         let width: Int
         let height: Int
         let likedByUser: Bool
-        let description: String
+        let description: String?
         let urls: UrlsResult
 
         enum CodingKeys: String, CodingKey {
