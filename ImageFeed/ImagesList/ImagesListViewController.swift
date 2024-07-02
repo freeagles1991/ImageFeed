@@ -30,6 +30,8 @@ final class ImagesListViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(photos.count)
+        self.fetchPhotosNextPage()
         
         imageListServiceObserver = NotificationCenter.default.addObserver(
                         forName: ProfileImageService.didChangeNotification,
@@ -81,14 +83,14 @@ extension ImagesListViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
-            
-            guard let imageListCell = cell as? ImagesListCell else {
-                return UITableViewCell()
-            }
-            
-            configCell(for: imageListCell, with: indexPath, in: tableView)
-            return imageListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
+        
+        guard let imageListCell = cell as? ImagesListCell else {
+            return UITableViewCell()
+        }
+        
+        configCell(for: imageListCell, with: indexPath, in: tableView)
+        return imageListCell
     }
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
@@ -96,12 +98,14 @@ extension ImagesListViewController: UITableViewDataSource{
         let imageIndex = photos[indexPath.row]
         let imageURLString = imageIndex.thumbImageURL
         let imageURL = URL(string: imageURLString)
+        print(imageURL)
         
         // Используем Kingfisher для асинхронной загрузки и кэширования изображения
         let placeholderImage = UIImage(named: "photo_stub")
         
         cell.cellImage.kf.indicatorType = .activity
         
+        cell.cellImage.kf.cancelDownloadTask()
         cell.cellImage.kf.setImage(
             with: imageURL,
             placeholder: placeholderImage,
@@ -132,8 +136,26 @@ extension ImagesListViewController: UITableViewDataSource{
         cell.dateLabel.text = dateFormatter.string(from: imageDate)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == photos.count - 1 {
+            self.fetchPhotosNextPage()
+        }
+    }
     
+    private func fetchPhotosNextPage() {
+        self.imagesListService.fetchPhotosNextPage() { (result: Result<[Photo], Error>) in
+            switch result{
+            case .success(let photos):
+                print("ImagesListViewController.tableView: фото успешно загружены")
+            case .failure(let error):
+                print("ImagesListViewController.tableView: ошибка при загрузке фото \(error)")
+            }
+        }
+    }
 }
+    
+
+
 
 extension ImagesListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
