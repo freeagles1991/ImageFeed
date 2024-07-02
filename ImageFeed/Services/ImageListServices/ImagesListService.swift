@@ -8,6 +8,9 @@
 import Foundation
 
 final class ImagesListService{
+    static let shared = ImagesListService()
+    private init() {}
+    
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     
@@ -59,8 +62,6 @@ final class ImagesListService{
             print("ImagesListService.fetchPhotosNextPage: сессия прервана")
             return
         }
-        
-        print("\(request)")
         
         let task = URLSession.shared.objectTask(for: request) {(result: Result<[PhotoResultBody], Error>) in
             switch result {

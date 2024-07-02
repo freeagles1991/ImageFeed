@@ -24,6 +24,23 @@ final class ImagesListCell: UITableViewCell {
          super.awakeFromNib()
          setupGradientLayer()
      }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let gradientFrame = CGRect(
+            x: 0,
+            y: cellImage.bounds.height - gradientHeight,
+            width: cellImage.bounds.width,
+            height: gradientHeight
+        )
+        gradientLayer.frame = gradientFrame
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cellImage.kf.cancelDownloadTask()
+    }
 
      private func setupGradientLayer() {
          gradientLayer.colors = [
@@ -34,17 +51,4 @@ final class ImagesListCell: UITableViewCell {
          gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
          cellImage.layer.addSublayer(gradientLayer)
      }
-
-    override func layoutSubviews() {
-            super.layoutSubviews()
-            // Обновляем фрейм градиентного слоя, чтобы он был на дне изображения и имел фиксированную высоту
-            let gradientFrame = CGRect(
-                x: 0,
-                y: cellImage.bounds.height - gradientHeight,
-                width: cellImage.bounds.width,
-                height: gradientHeight
-            )
-            gradientLayer.frame = gradientFrame
-        }
-    
 }
