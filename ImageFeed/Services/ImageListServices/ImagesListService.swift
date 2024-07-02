@@ -45,62 +45,68 @@ final class ImagesListService{
     }
     
     func fetchPhotosNextPage(completion: @escaping (Result<[Photo], Error>) -> Void) {
-        assert(Thread.isMainThread)
-        
-        if task != nil{
-            completion(.failure(NetworkError.urlSessionError))
-            print("ImagesListService.fetchPhotosNextPage: запрос уже выполняется")
-            return
-        }
-        
-        let nextPage = (lastLoadedPage ?? 0) + 1
-        
-        guard let request = makePhotosRequest(nextPage) else {
-            DispatchQueue.main.async {
-                completion(.failure(NetworkError.urlSessionError))
-            }
-            print("ImagesListService.fetchPhotosNextPage: сессия прервана")
-            return
-        }
-        
-        let task = URLSession.shared.objectTask(for: request) {(result: Result<[PhotoResultBody], Error>) in
-            switch result {
-            case .success(let photosResult):
-                var newPhotos: [Photo] = []
-                for photoResult in photosResult{
-                    guard let photo = photoResult.convertToPhoto() else { return }
-                    newPhotos.append(photo)
-                }
-                DispatchQueue.main.async {
-                    self.photos.append(contentsOf: newPhotos)
-                    completion(.success(newPhotos))
-                    NotificationCenter.default.post(
-                        name: ImagesListService.didChangeNotification,
-                            object: self,
-                            userInfo: ["Photos": newPhotos])
-                }
-                print("ImagesListService.fetchPhotosNextPage: Фото загружены")
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-                switch error {
-                case NetworkError.httpStatusCode(let statusCode):
-                    print("ImagesListService.fetchPhotosNextPage. HTTP Error: status-code \(statusCode)")
-                case NetworkError.urlRequestError(let requestError):
-                    print("ImagesListService.fetchPhotosNextPage. Request error: \(requestError.localizedDescription)")
-                case NetworkError.urlSessionError:
-                    print("ImagesListService.fetchPhotosNextPage. URLSession Error")
-                default:
-                    print("ImagesListService.fetchPhotosNextPage. Unknown error: \(error.localizedDescription)")
-                }
-                print("ImagesListService.fetchPhotosNextPage. Ошибка при декодировании photo")
-            }
-            self.task = nil
-        }
-      self.task = task
-      task.resume()
-    }
+         assert(Thread.isMainThread)
+
+         if task != nil {
+             completion(.failure(NetworkError.urlSessionError))
+             print("ImagesListService.fetchPhotosNextPage: запрос уже выполняется")
+             return
+         }
+
+         let nextPage = (lastLoadedPage ?? 0) + 1
+
+         guard let request = makePhotosRequest(nextPage) else {
+             DispatchQueue.main.async {
+                 completion(.failure(NetworkError.urlSessionError))
+             }
+             print("ImagesListService.fetchPhotosNextPage: сессия прервана")
+             return
+         }
+
+         task = URLSession.shared.objectTask(for: request) { (result: Result<[PhotoResultBody], Error>) in
+             switch result {
+             case .success(let photosResult):
+                 var newPhotos: [Photo] = []
+                 for photoResult in photosResult {
+                     guard let photo = photoResult.convertToPhoto() else {
+                         DispatchQueue.main.async {
+                             print("ImagesListService.fetchPhotosNextPage: ошибка декодирования")
+                             completion(.failure(NetworkError.urlSessionError))
+                         }
+                         return
+                     }
+                     newPhotos.append(photo)
+                 }
+                 DispatchQueue.main.async {
+                     self.lastLoadedPage = nextPage
+                     self.photos.append(contentsOf: newPhotos)
+                     completion(.success(newPhotos))
+                     NotificationCenter.default.post(
+                         name: ImagesListService.didChangeNotification,
+                         object: self,
+                         userInfo: ["Photos": newPhotos]
+                     )
+                 }
+                 print("ImagesListService.fetchPhotosNextPage: Фото загружены")
+             case .failure(let error):
+                 DispatchQueue.main.async {
+                     completion(.failure(error))
+                 }
+                 switch error {
+                 case NetworkError.httpStatusCode(let statusCode):
+                     print("ImagesListService.fetchPhotosNextPage. HTTP Error: status-code \(statusCode)")
+                 case NetworkError.urlRequestError(let requestError):
+                     print("ImagesListService.fetchPhotosNextPage. Request error: \(requestError.localizedDescription)")
+                 case NetworkError.urlSessionError:
+                     print("ImagesListService.fetchPhotosNextPage. URLSession Error")
+                 default:
+                     print("ImagesListService.fetchPhotosNextPage. Unknown error: \(error.localizedDescription)")
+                 }
+             }
+             self.task = nil
+         }
+         task?.resume()
+     }
 }
     
 

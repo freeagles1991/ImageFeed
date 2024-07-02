@@ -30,8 +30,7 @@ final class ImagesListViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(photos.count)
-        self.fetchPhotosNextPage()
+        self.fetchInitialPhotos()
         
         imageListServiceObserver = NotificationCenter.default.addObserver(
                         forName: ProfileImageService.didChangeNotification,
@@ -98,7 +97,6 @@ extension ImagesListViewController: UITableViewDataSource{
         let imageIndex = photos[indexPath.row]
         let imageURLString = imageIndex.thumbImageURL
         let imageURL = URL(string: imageURLString)
-        print(imageURL)
         
         // Используем Kingfisher для асинхронной загрузки и кэширования изображения
         let placeholderImage = UIImage(named: "photo_stub")
@@ -121,8 +119,6 @@ extension ImagesListViewController: UITableViewDataSource{
                 }
             }
         
-        cell.cellImage.kf.setImage(with: imageURL)
-        
         //Выставляем лайк, если есть
         let isLiked = imageIndex.isLiked
         let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
@@ -138,17 +134,18 @@ extension ImagesListViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == photos.count - 1 {
-            self.fetchPhotosNextPage()
+            self.fetchInitialPhotos()
         }
     }
     
-    private func fetchPhotosNextPage() {
-        self.imagesListService.fetchPhotosNextPage() { (result: Result<[Photo], Error>) in
-            switch result{
-            case .success(let photos):
-                print("ImagesListViewController.tableView: фото успешно загружены")
+    private func fetchInitialPhotos() {
+        ImagesListService.shared.fetchPhotosNextPage { result in
+            switch result {
+            case .success(let newPhotos):
+                self.photos.append(contentsOf: newPhotos)
+                self.tableView.reloadData()
             case .failure(let error):
-                print("ImagesListViewController.tableView: ошибка при загрузке фото \(error)")
+                print("Ошибка загрузки фото: \(error)")
             }
         }
     }
@@ -159,15 +156,14 @@ extension ImagesListViewController: UITableViewDataSource{
 
 extension ImagesListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
+        let imageIndex = photos[indexPath.row]
+        let imageWidth = imageIndex.size.width
+        let imageHeight = imageIndex.size.height
         
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
         let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
+        let cellHeight = imageHeight * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }
     
