@@ -10,7 +10,7 @@ import Foundation
 struct ProfileResultResponseBody: Decodable {
     let username: String
     let firstName: String
-    let lastName: String
+    let lastName: String?
     let bio: String?
     
     enum CodingKeys: String, CodingKey {
@@ -32,7 +32,7 @@ struct ProfileResultResponseBody: Decodable {
     func toProfile() -> Profile {
         return Profile(
             username: self.username,
-            name: "\(self.firstName) \(self.lastName)",
+            name: "\(self.firstName) \(self.lastName ?? "")",
             loginName: "@\(self.username)",
             bio: self.bio ?? "empty"
         )
