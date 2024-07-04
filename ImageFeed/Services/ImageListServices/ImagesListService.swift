@@ -107,6 +107,104 @@ final class ImagesListService{
          }
          task?.resume()
      }
+    
+    private func makeChangeLikeRequest(photoID: String, isLike: Bool) -> URLRequest? {
+        guard let baseURL = URL(string: "https://api.unsplash.com") else {
+            print("Invalid base URL")
+            return nil
+        }
+        
+        guard let url = URL(
+            string: "/photos/\(photoID)/like",
+            relativeTo: baseURL
+        ) else {
+            print("Invalid URL")
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = isLike ? "DELETE" : "POST"
+        guard let token = oauthService.getToken()
+        else {
+            print("No token")
+            return nil}
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void){
+        assert(Thread.isMainThread)
+        
+        if task != nil {
+            completion(.failure(NetworkError.urlSessionError))
+            print("ImagesListService.changeLike: запрос уже выполняется")
+            return
+        }
+        
+        guard let request = makeChangeLikeRequest(photoID: photoId, isLike: isLike) else {
+            DispatchQueue.main.async {
+                completion(.failure(NetworkError.urlSessionError))
+            }
+            print("ImagesListService.changeLike: сессия прервана")
+            return
+        }
+        
+        task = URLSession.shared.objectTask(for: request) { (result: Result<PhotoResultBody, Error>) in
+            switch result {
+            case .success(let photoResult):
+                guard let likedPhoto = photoResult.convertToPhoto() else {
+                    DispatchQueue.main.async {
+                        print("ImagesListService.changeLike: ошибка декодирования")
+                        completion(.failure(NetworkError.urlSessionError))
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                        let photo = self.photos[index]
+                        let newPhoto = Photo(
+                            id: photo.id,
+                            size: photo.size,
+                            createdAt: photo.createdAt,
+                            welcomeDescription: photo.welcomeDescription,
+                            thumbImageURL: photo.thumbImageURL,
+                            largeImageURL: photo.largeImageURL,
+                            isLiked: !photo.isLiked
+                        )
+                        guard let withReplaced = self.photos.withReplaced(itemAt: index, newValue: newPhoto) else { return }
+                            self.photos = withReplaced
+                        completion(.success(()))
+                        NotificationCenter.default.post(
+                            name: ImagesListService.didChangeNotification,
+                            object: self,
+                            userInfo: [:]
+                        )
+                        print("ImagesListService.changeLike: Лайк изменен")
+                    }
+                    else {
+                        completion(.failure(NetworkError.urlSessionError))
+                        print("ImagesListService.changeLike: Лайк не изменен, индекс фото некорректный")
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+                switch error {
+                case NetworkError.httpStatusCode(let statusCode):
+                    print("ImagesListService.changeLike. HTTP Error: status-code \(statusCode)")
+                case NetworkError.urlRequestError(let requestError):
+                    print("ImagesListService.changeLike. Request error: \(requestError.localizedDescription)")
+                case NetworkError.urlSessionError:
+                    print("ImagesListService.changeLike. URLSession Error")
+                default:
+                    print("ImagesListService.changeLike. Unknown error: \(error.localizedDescription)")
+                }
+            }
+            self.task = nil
+        }
+        task?.resume()
+    }
 }
     
 

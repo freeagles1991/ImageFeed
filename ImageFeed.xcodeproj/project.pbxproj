@@ -23,6 +23,8 @@
 		3288CB772BE4F5AC006B5BCC /* ImageFeedUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288CB762BE4F5AC006B5BCC /* ImageFeedUITestsLaunchTests.swift */; };
 		3288CB842BF12A17006B5BCC /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3288CB832BF12A17006B5BCC /* ImagesListCell.swift */; };
 		3288CB892BF3BA76006B5BCC /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3288CB882BF3BA76006B5BCC /* SF-Pro.ttf */; };
+		3292FE772C3583A300A1E2D5 /* Array+withReplaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3292FE762C3583A300A1E2D5 /* Array+withReplaced.swift */; };
+		3292FE792C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3292FE782C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift */; };
 		32A67D602C14A6B200405408 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D5F2C14A6B200405408 /* OAuth2Service.swift */; };
 		32A67D632C15DAD600405408 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D622C15DAD600405408 /* URLSession+data.swift */; };
 		32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D642C19B83D00405408 /* SplashViewController.swift */; };
@@ -87,6 +89,8 @@
 		3288CB762BE4F5AC006B5BCC /* ImageFeedUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3288CB832BF12A17006B5BCC /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		3288CB882BF3BA76006B5BCC /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		3292FE762C3583A300A1E2D5 /* Array+withReplaced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+withReplaced.swift"; sourceTree = "<group>"; };
+		3292FE782C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegateProtocol.swift; sourceTree = "<group>"; };
 		32A67D5F2C14A6B200405408 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		32A67D622C15DAD600405408 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
 		32A67D642C19B83D00405408 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				3288CB572BE4F5A8006B5BCC /* ImagesListViewController.swift */,
 				3288CB832BF12A17006B5BCC /* ImagesListCell.swift */,
 				32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */,
+				3292FE782C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 			children = (
 				32A67D622C15DAD600405408 /* URLSession+data.swift */,
 				32A67D8C2C2AE22D00405408 /* URLSession+objectTask.swift */,
+				3292FE762C3583A300A1E2D5 /* Array+withReplaced.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -484,6 +490,7 @@
 				3288CB582BE4F5A8006B5BCC /* ImagesListViewController.swift in Sources */,
 				3288CB842BF12A17006B5BCC /* ImagesListCell.swift in Sources */,
 				32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */,
+				3292FE772C3583A300A1E2D5 /* Array+withReplaced.swift in Sources */,
 				32A67D812C2326ED00405408 /* ProfileResultResponseBody.swift in Sources */,
 				32A67D892C29A88200405408 /* ProfileImageService.swift in Sources */,
 				32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */,
@@ -505,6 +512,7 @@
 				3288CB562BE4F5A8006B5BCC /* SceneDelegate.swift in Sources */,
 				32A67D7D2C21B2FD00405408 /* UIBlockingProgressHUD.swift in Sources */,
 				32A67D7F2C23266800405408 /* ProfileService.swift in Sources */,
+				3292FE792C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift in Sources */,
 				32A67D9A2C2EBEE500405408 /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

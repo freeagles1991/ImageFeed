@@ -88,6 +88,8 @@ extension ImagesListViewController: UITableViewDataSource{
             return UITableViewCell()
         }
         
+        imageListCell.delegate = self
+        
         configCell(for: imageListCell, with: indexPath, in: tableView)
         return imageListCell
     }
@@ -170,5 +172,21 @@ extension ImagesListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
         }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+            let photo = photos[indexPath.row]
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
+            switch result{
+            case .success():
+                
+                print("ImagesListViewController: Лайк изменен")
+            case .failure(let error):
+                print("ImagesListViewController: Лайк НЕ изменен - \(error)")
+            }
+        }
+    }
 }
 

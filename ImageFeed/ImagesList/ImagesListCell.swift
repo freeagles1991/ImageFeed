@@ -11,6 +11,8 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
+    weak var delegate: ImagesListCellDelegate?
+    
     @IBOutlet var cellImage: UIImageView!
     
     @IBOutlet var likeButton: UIButton!
@@ -42,7 +44,7 @@ final class ImagesListCell: UITableViewCell {
         cellImage.kf.cancelDownloadTask()
     }
 
-     private func setupGradientLayer() {
+    private func setupGradientLayer() {
          gradientLayer.colors = [
              UIColor.clear.cgColor,
              UIColor.black.withAlphaComponent(0.5).cgColor
@@ -50,5 +52,13 @@ final class ImagesListCell: UITableViewCell {
          gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
          gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
          cellImage.layer.addSublayer(gradientLayer)
-     }
+    }
+    
+    func setIsLiked(){
+        
+    }
+    
+    @IBAction func likeButtonClicked(_ sender: UIButton) {
+        delegate?.imageListCellDidTapLike(self)
+    }
 }
