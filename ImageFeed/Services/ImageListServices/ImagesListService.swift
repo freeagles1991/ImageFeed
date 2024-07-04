@@ -149,10 +149,10 @@ final class ImagesListService{
             return
         }
         
-        task = URLSession.shared.objectTask(for: request) { (result: Result<PhotoResultBody, Error>) in
+        task = URLSession.shared.objectTask(for: request) { (result: Result<LikeResponseBody, Error>) in
             switch result {
-            case .success(let photoResult):
-                guard let likedPhoto = photoResult.convertToPhoto() else {
+            case .success(let response):
+                guard let likedPhoto = response.photo.convertToPhoto() else {
                     DispatchQueue.main.async {
                         print("ImagesListService.changeLike: ошибка декодирования")
                         completion(.failure(NetworkError.urlSessionError))

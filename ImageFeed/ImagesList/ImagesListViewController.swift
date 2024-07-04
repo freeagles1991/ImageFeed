@@ -12,6 +12,7 @@ import ProgressHUD
 final class ImagesListViewController: UIViewController{
     private var photos: [Photo] = []
     private let imagesListService = ImagesListService.shared
+    private let alertService = AlertService.shared
     
     @IBOutlet private var tableView: UITableView!
     
@@ -31,6 +32,7 @@ final class ImagesListViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.fetchInitialPhotos()
+        alertService.delegate = self
         
         imageListServiceObserver = NotificationCenter.default.addObserver(
                         forName: ProfileImageService.didChangeNotification,
@@ -178,13 +180,22 @@ extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
             let photo = photos[indexPath.row]
-        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
+        
+        cell.setIsLiked(isLiked: !photo.isLiked)
+        UIBlockingProgressHUD.show()
+        
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
+            guard let self = self else { return }
             switch result{
             case .success():
-                
                 print("ImagesListViewController: Лайк изменен")
+                self.photos = self.imagesListService.photos
+                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
                 print("ImagesListViewController: Лайк НЕ изменен - \(error)")
+                cell.setIsLiked(isLiked: photo.isLiked)
+                UIBlockingProgressHUD.dismiss()
+                self.alertService.showAlert(title: "Ошибка", message: "Что-то пошло не так", buttonTitle: "ОК")
             }
         }
     }

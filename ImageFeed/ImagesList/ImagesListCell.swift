@@ -54,8 +54,9 @@ final class ImagesListCell: UITableViewCell {
          cellImage.layer.addSublayer(gradientLayer)
     }
     
-    func setIsLiked(){
-        
+    func setIsLiked(isLiked: Bool){
+        let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
+        likeButton.setImage(likeImage, for: .normal)
     }
     
     @IBAction func likeButtonClicked(_ sender: UIButton) {
