@@ -7,17 +7,23 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     private var nameLabel: UILabel?
-    private var emailLabel: UILabel?
+    private var loginLabel: UILabel?
     private var statusLabel: UILabel?
     private var profileImageView = UIImageView()
     private let profileImage = UIImage(named: "ProfilePhoto")
     private let profileNameString = "Екатерина Новикова"
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
+    
+    let profileService = ProfileService.shared
+    let profileImageService = ProfileImageService.shared
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +32,20 @@ final class ProfileViewController: UIViewController {
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
+        guard let profile = profileService.profile else { return }
+        self.updateProfileDetails(profile: profile)
         
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                       object: nil,
+                       queue: .main
+                   ) { [weak self] _ in
+                       guard let self = self else { return }
+                       self.updateAvatar()
+                   }
+               updateAvatar()
     }
+    
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,7 +87,7 @@ final class ProfileViewController: UIViewController {
         label.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
         label.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor).isActive = true
         
-        self.emailLabel = label
+        self.loginLabel = label
     }
     
     private func setupStatusLabel(){
@@ -81,7 +99,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
         
-        guard let emailLabel = self.emailLabel else { return }
+        guard let emailLabel = self.loginLabel else { return }
         label.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 8).isActive = true
         label.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor).isActive = true
         
@@ -101,6 +119,28 @@ final class ProfileViewController: UIViewController {
         exitButtonView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         exitButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
     }
+    
+    private func updateProfileDetails(profile: Profile){
+        nameLabel?.text = profile.name
+        statusLabel?.text = profile.bio
+        loginLabel?.text = profile.loginName
+    }
+    
+    private func updateAvatar() {
+            guard
+                let profileImageURL = profileImageService.smallAvatarURL,
+                let url = URL(string: profileImageURL)
+            else { return }
+        profileImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)
+        profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholder.jpeg"),
+            options: [.processor(processor)])
+        
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+        }
     
     @objc
     private func didTapButton() {
