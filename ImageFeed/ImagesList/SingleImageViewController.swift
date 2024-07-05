@@ -17,13 +17,15 @@ final class SingleImageViewController: UIViewController{
         }
     }
     
- var image: UIImage? {
-     didSet {
-         guard isViewLoaded else { return }
-         guard let image = image else { return }
-         rescaleAndCenterImageInScrollView(image: image)
-     }
- }
+    var image: UIImage? {
+        didSet {
+            guard isViewLoaded else { return }
+            guard let image = image else { return }
+            rescaleAndCenterImageInScrollView(image: image)
+        }
+    }
+    
+    private let alertService = AlertService.shared
     
     @IBOutlet private var imageView: UIImageView!
     
@@ -35,6 +37,7 @@ final class SingleImageViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertService.singleImageVCDelegate = self
         self.loadImage()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.5
@@ -54,7 +57,7 @@ final class SingleImageViewController: UIViewController{
         presentActivityViewController(from: self, with: imageToShare)
     }
     
-    private func loadImage() {
+    func loadImage() {
         UIBlockingProgressHUD.show()
         guard let imageUrl = imageUrl else { return }
         imageView.kf.setImage(
@@ -70,7 +73,8 @@ final class SingleImageViewController: UIViewController{
                     print()
                 case .failure(let error):
                     print(error)
-                    //Тут показываем сообщение об ошибке
+                    guard let self = self else { return }
+                    self.alertService.showAlert(title: "Ошибка", message: "Изображение не загружено", buttonRetryTitle: "Повторить", buttonCloseTitle: "Пропустить")
                 }
             }
     }
