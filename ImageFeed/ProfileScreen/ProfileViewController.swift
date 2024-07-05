@@ -14,6 +14,7 @@ final class ProfileViewController: UIViewController {
     private var nameLabel: UILabel?
     private var loginLabel: UILabel?
     private var statusLabel: UILabel?
+    private var exitButtonView: UIButton?
     private var profileImageView = UIImageView()
     private let profileImage = UIImage(named: "ProfilePhoto")
     private let profileNameString = "Екатерина Новикова"
@@ -22,6 +23,7 @@ final class ProfileViewController: UIViewController {
     
     let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
+    private let profileLogoutService = ProfileLogoutService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
@@ -118,6 +120,9 @@ final class ProfileViewController: UIViewController {
         exitButtonView.widthAnchor.constraint(equalToConstant: 24).isActive = true
         exitButtonView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         exitButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
+        
+        exitButtonView.addTarget(self, action: #selector(logoutButtonTap), for: .touchUpInside)
+        self.exitButtonView = exitButtonView
     }
     
     private func updateProfileDetails(profile: Profile){
@@ -145,5 +150,16 @@ final class ProfileViewController: UIViewController {
     @objc
     private func didTapButton() {
         print("Tap exit buttton")
+    }
+    
+    private func logout(){
+        profileLogoutService.logout()
+        let splashViewCotroller = SplashViewController()
+        splashViewCotroller.modalPresentationStyle = .fullScreen
+        self.present(splashViewCotroller, animated: true, completion: nil)
+    }
+    
+    @IBAction func logoutButtonTap(_ sender: UIButton) {
+        self.logout()
     }
 }
