@@ -177,7 +177,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="k9m-Ln-fWj"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="colorBlack"/>
                         <constraints>
                             <constraint firstItem="LNg-Hi-YOC" firstAttribute="top" secondItem="k9m-Ln-fWj" secondAttribute="top" constant="11" id="7gK-cP-n6i"/>
                             <constraint firstItem="k9m-Ln-fWj" firstAttribute="leading" secondItem="e7S-Pv-nJT" secondAttribute="leading" id="Gsc-UZ-sVg"/>

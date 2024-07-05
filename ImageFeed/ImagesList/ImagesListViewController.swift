@@ -49,20 +49,25 @@ final class ImagesListViewController: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
-                guard
-                    let viewController = segue.destination as? SingleImageViewController,
-                    let indexPath = sender as? IndexPath
-                else {
-                    assertionFailure("Invalid segue destination")
-                    return
-                }
-
-                let image = UIImage(named: photosName[indexPath.row])
-                viewController.image = image
+            guard
+                let viewController = segue.destination as? SingleImageViewController,
+                let indexPath = sender as? IndexPath
+            else {
+                assertionFailure("Invalid segue destination")
+                return
+            }
+            
+            let imageUrlString = photos[indexPath.row].largeImageURL
+            if let imageUrl = URL(string: imageUrlString) {
+                viewController.imageUrl = imageUrl
+                //let image = UIImage(named: photosName[indexPath.row])
+                //viewController.image = image
             } else {
                 super.prepare(for: segue, sender: sender)
             }
         }
+    }
+    
     private func updateTableViewAnimated(){
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
