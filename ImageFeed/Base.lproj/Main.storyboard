@@ -29,7 +29,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Images/Image0" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-Hd-h6d" userLabel="Cell Image">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-Hd-h6d" userLabel="Cell Image">
                                                     <rect key="frame" x="16" y="4" width="361" height="192"/>
                                                     <color key="backgroundColor" name="colorBlack"/>
                                                     <userDefinedRuntimeAttributes>
@@ -75,7 +75,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="cellImage" destination="tJP-Hd-h6d" id="MdQ-t8-hDt"/>
+                                            <outlet property="cellImageView" destination="tJP-Hd-h6d" id="MdQ-t8-hDt"/>
                                             <outlet property="dateLabel" destination="LyI-cc-8yO" id="4aC-Cs-azA"/>
                                             <outlet property="likeButton" destination="uE2-NC-qEy" id="cFO-3v-nQQ"/>
                                         </connections>
@@ -323,7 +323,6 @@
         <image name="0" width="1600" height="1059"/>
         <image name="BackwardIcon" width="24" height="24"/>
         <image name="FavoritreNoActive" width="30" height="26"/>
-        <image name="Images/Image0" width="1600" height="1059"/>
         <image name="SharingIcon" width="51" height="51"/>
         <image name="auth_screen_logo" width="60" height="60"/>
         <image name="tab_editorial_active" width="30" height="30"/>

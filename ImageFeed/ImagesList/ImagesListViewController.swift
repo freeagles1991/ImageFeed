@@ -60,8 +60,6 @@ final class ImagesListViewController: UIViewController{
             let imageUrlString = photos[indexPath.row].largeImageURL
             if let imageUrl = URL(string: imageUrlString) {
                 viewController.imageUrl = imageUrl
-                //let image = UIImage(named: photosName[indexPath.row])
-                //viewController.image = image
             } else {
                 super.prepare(for: segue, sender: sender)
             }
@@ -101,21 +99,25 @@ extension ImagesListViewController: UITableViewDataSource{
         return imageListCell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == photos.count - 1 {
+            self.fetchInitialPhotos()
+        }
+    }
+    
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
-        // Получаем URL изображения из вашего массива или модели данных
         let imageIndex = photos[indexPath.row]
         let imageURLString = imageIndex.thumbImageURL
         let imageURL = URL(string: imageURLString)
         
-        // Используем Kingfisher для асинхронной загрузки и кэширования изображения
         let placeholderImage = UIImage(named: "photo_stub")
         
-        cell.cellImage.kf.indicatorType = .activity
+        cell.cellImageView.kf.indicatorType = .activity
         
-        cell.cellImage.kf.cancelDownloadTask()
-        cell.cellImage.kf.setImage(
+        cell.cellImageView.kf.cancelDownloadTask()
+        cell.cellImageView.kf.setImage(
             with: imageURL,
-            placeholder: placeholderImage,
+            placeholder: createPlaceholderImage(forCellWith: tableView.rectForRow(at: indexPath)),
             options: nil) { completition in
                 switch completition {
                 case .success(_):
@@ -128,12 +130,10 @@ extension ImagesListViewController: UITableViewDataSource{
                 }
             }
         
-        //Выставляем лайк, если есть
         let isLiked = imageIndex.isLiked
         let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
         cell.likeButton.setImage(likeImage, for: .normal)
         
-        //Выставляем дату
         guard let imageDate = imageIndex.createdAt else {
             cell.dateLabel.text = dateFormatter.string(from: Date())
             return
@@ -141,10 +141,30 @@ extension ImagesListViewController: UITableViewDataSource{
         cell.dateLabel.text = dateFormatter.string(from: imageDate)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == photos.count - 1 {
-            self.fetchInitialPhotos()
-        }
+    private func createPlaceholderImage(forCellWith frame: CGRect) -> UIImage {
+        let placeholderView = UIView(frame: CGRect(origin: .zero, size: frame.size))
+        placeholderView.backgroundColor = .white.withAlphaComponent(0.3)
+        
+        guard let imageStub = UIImage(named: "photo_stub") else { return UIImage() }
+        let imageStubView = UIImageView(image: imageStub)
+        imageStubView.translatesAutoresizingMaskIntoConstraints = false
+        placeholderView.addSubview(imageStubView)
+        
+        NSLayoutConstraint.activate([
+            imageStubView.centerXAnchor.constraint(equalTo: placeholderView.centerXAnchor),
+            imageStubView.centerYAnchor.constraint(equalTo: placeholderView.centerYAnchor),
+            imageStubView.heightAnchor.constraint(equalToConstant: 75),
+            imageStubView.widthAnchor.constraint(equalToConstant: 83)
+        ])
+        
+        placeholderView.layoutIfNeeded()
+        
+        UIGraphicsBeginImageContextWithOptions(placeholderView.bounds.size, false, 0.0)
+        placeholderView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let placeholderImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return placeholderImage ?? UIImage()
     }
     
     private func fetchInitialPhotos() {

@@ -13,7 +13,7 @@ final class ImagesListCell: UITableViewCell {
     
     weak var delegate: ImagesListCellDelegate?
     
-    @IBOutlet var cellImage: UIImageView!
+    @IBOutlet var cellImageView: UIImageView!
     
     @IBOutlet var likeButton: UIButton!
 
@@ -31,8 +31,8 @@ final class ImagesListCell: UITableViewCell {
         super.layoutSubviews()
         let gradientFrame = CGRect(
             x: 0,
-            y: cellImage.bounds.height - gradientHeight,
-            width: cellImage.bounds.width,
+            y: cellImageView.bounds.height - gradientHeight,
+            width: cellImageView.bounds.width,
             height: gradientHeight
         )
         gradientLayer.frame = gradientFrame
@@ -41,7 +41,7 @@ final class ImagesListCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        cellImage.kf.cancelDownloadTask()
+        cellImageView.kf.cancelDownloadTask()
     }
 
     private func setupGradientLayer() {
@@ -51,7 +51,19 @@ final class ImagesListCell: UITableViewCell {
          ]
          gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
          gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-         cellImage.layer.addSublayer(gradientLayer)
+         cellImageView.layer.addSublayer(gradientLayer)
+    }
+    
+    private func setupImageView() {
+        contentView.addSubview(cellImageView)
+        
+        // Установка ограничений для центрирования UIImageView
+        NSLayoutConstraint.activate([
+            cellImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            cellImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            cellImageView.widthAnchor.constraint(equalToConstant: 100),  // Укажите желаемую ширину
+            cellImageView.heightAnchor.constraint(equalToConstant: 100)  // Укажите желаемую высоту
+        ])
     }
     
     func setIsLiked(isLiked: Bool){
