@@ -24,11 +24,15 @@ final class ProfileViewController: UIViewController {
     let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
     private let profileLogoutService = ProfileLogoutService.shared
+    private let alertService = AlertService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        alertService.profileVCDelegate = self
+        
         self.setupProfileImageView()
         self.setupNameLabel()
         self.setupEmailLabel()
@@ -111,7 +115,7 @@ final class ProfileViewController: UIViewController {
     private func setupExitbutton(){
         let exitButtonView = UIButton(type: .custom)
         exitButtonView.setImage(UIImage(named: "LogoutIcon"), for: .normal)
-        exitButtonView.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
+        exitButtonView.addTarget(self, action: #selector(logoutButtonTap), for: .touchUpInside)
         
         exitButtonView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButtonView)
@@ -121,7 +125,6 @@ final class ProfileViewController: UIViewController {
         exitButtonView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         exitButtonView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
         
-        exitButtonView.addTarget(self, action: #selector(logoutButtonTap), for: .touchUpInside)
         self.exitButtonView = exitButtonView
     }
     
@@ -147,19 +150,16 @@ final class ProfileViewController: UIViewController {
         profileImageView.clipsToBounds = true
         }
     
-    @objc
-    private func didTapButton() {
-        print("Tap exit buttton")
-    }
-    
-    private func logout(){
+    func logout(){
+        UIBlockingProgressHUD.show()
         profileLogoutService.logout()
         let splashViewCotroller = SplashViewController()
         splashViewCotroller.modalPresentationStyle = .fullScreen
         self.present(splashViewCotroller, animated: true, completion: nil)
+        UIBlockingProgressHUD.dismiss()
     }
     
-    @IBAction func logoutButtonTap(_ sender: UIButton) {
-        self.logout()
+    @IBAction private func logoutButtonTap(_ sender: UIButton) {
+        alertService.showAlert(title: "Пока!", message: "Точно хотите выйти?", buttonConfirmTitle: "Да, ухожу", buttonDeclineTitle: "Нет, остаюсь")
     }
 }

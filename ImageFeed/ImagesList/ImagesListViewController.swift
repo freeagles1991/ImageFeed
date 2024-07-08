@@ -118,7 +118,7 @@ extension ImagesListViewController: UITableViewDataSource{
             placeholder: placeholderImage,
             options: nil) { completition in
                 switch completition {
-                case .success(let result):
+                case .success(_):
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                     ProgressHUD.dismiss()
                     print("ImagesListViewController.configCell: Загрузка фото завершена")
@@ -159,9 +159,6 @@ extension ImagesListViewController: UITableViewDataSource{
         }
     }
 }
-    
-
-
 
 extension ImagesListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{

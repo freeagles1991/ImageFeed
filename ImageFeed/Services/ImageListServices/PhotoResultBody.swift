@@ -66,8 +66,7 @@ struct PhotoResultBody: Codable{
     }
     
     func convertToPhoto() -> Photo? {
-        let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateFormatter = ISO8601DateFormatter()
         let photoBody = Photo(id: self.id,
                                   size: CGSize(width: self.width, height: self.height),
                                   createdAt: dateFormatter.date(from: self.createdAt),
