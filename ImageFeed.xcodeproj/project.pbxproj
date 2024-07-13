@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320243722C42F1A90073E938 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243712C42F1A90073E938 /* WebViewPresenter.swift */; };
 		32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */; };
 		32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */; };
 		3276056B2C0CA279003E241A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3276056A2C0CA279003E241A /* Constants.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		320243712C42F1A90073E938 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3276056A2C0CA279003E241A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -269,8 +271,9 @@
 			children = (
 				3276056F2C0F1495003E241A /* WebViewViewController.swift */,
 				32A67D662C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift */,
-				32A67D692C1C6B0900405408 /* WebViewConstants.swift */,
 				32A67D6B2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift */,
+				320243712C42F1A90073E938 /* WebViewPresenter.swift */,
+				32A67D692C1C6B0900405408 /* WebViewConstants.swift */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				3292FE7D2C383B0C00A1E2D5 /* ProfileLogoutService.swift in Sources */,
 				32A67D9E2C2EC8B000405408 /* ImagesListService.swift in Sources */,
 				3288CB562BE4F5A8006B5BCC /* SceneDelegate.swift in Sources */,
+				320243722C42F1A90073E938 /* WebViewPresenter.swift in Sources */,
 				32A67D7D2C21B2FD00405408 /* UIBlockingProgressHUD.swift in Sources */,
 				32A67D7F2C23266800405408 /* ProfileService.swift in Sources */,
 				3292FE792C35D26900A1E2D5 /* ImagesListCellDelegateProtocol.swift in Sources */,

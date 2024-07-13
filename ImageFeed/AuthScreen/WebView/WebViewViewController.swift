@@ -9,7 +9,14 @@ import Foundation
 import UIKit
 import WebKit
 
-final class WebViewViewController: UIViewController{
+public protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(request: URLRequest)
+}
+
+final class WebViewViewController: UIViewController & WebViewViewControllerProtocol{
+    var presenter: WebViewPresenterProtocol?
+    
     @IBOutlet private var webView: WKWebView!
     
     @IBOutlet private var progressView: UIProgressView!
@@ -31,28 +38,10 @@ final class WebViewViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        self.loadAuthView()
+        presenter?.loadAuthWebView()
     }
     
-    private func loadAuthView() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            print("Нет ссылки на страницу авторизации")
-            return
-        }
-
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-
-        guard let url = urlComponents.url else {
-            print("Url не сформирован")
-            return
-        }
-
-        let request = URLRequest(url: url)
+    func load(request: URLRequest) {
         webView.load(request)
     }
 
