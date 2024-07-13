@@ -54,4 +54,11 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
+    
+    func code(from navigationAction: WKNavigationAction) -> String? {
+        if let url = navigationAction.request.url {
+            return presenter?.code(from: url)
+        }
+        return nil
+    }
 }
