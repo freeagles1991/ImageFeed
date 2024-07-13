@@ -7,16 +7,25 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController{
+    var imageUrl: URL? {
+        didSet {
+            guard isViewLoaded else { return }
+            self.loadImage()
+        }
+    }
+    
     var image: UIImage? {
         didSet {
-            guard isViewLoaded else { return } // 1
-            imageView.image = image
+            guard isViewLoaded else { return }
             guard let image = image else { return }
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
+    
+    private let alertService = AlertService.shared
     
     @IBOutlet private var imageView: UIImageView!
     
@@ -28,12 +37,10 @@ final class SingleImageViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
-        guard let image = image else { return }
-        imageView.frame.size = image.size
-        rescaleAndCenterImageInScrollView(image: image)
+        alertService.singleImageVCDelegate = self
+        self.loadImage()
         scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 1.25
+        scrollView.maximumZoomScale = 1.5
     }
     
     //Тап по кнопке "Назад"
@@ -50,6 +57,27 @@ final class SingleImageViewController: UIViewController{
         presentActivityViewController(from: self, with: imageToShare)
     }
     
+    func loadImage() {
+        UIBlockingProgressHUD.show()
+        guard let imageUrl = imageUrl else { return }
+        imageView.kf.setImage(
+            with: imageUrl) { [weak self] result in
+                UIBlockingProgressHUD.dismiss()
+                switch result{
+                case .success(let photo):
+                    guard let self = self else { return }
+                    self.image = self.imageView.image
+                    guard let image = image else { return }
+                    imageView.frame.size = image.size
+                    rescaleAndCenterImageInScrollView(image: image)
+                    print()
+                case .failure(let error):
+                    print(error)
+                    guard let self = self else { return }
+                    self.alertService.showAlert(title: "Ошибка", message: "Изображение не загружено", buttonRetryTitle: "Повторить", buttonCloseTitle: "Пропустить")
+                }
+            }
+    }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale

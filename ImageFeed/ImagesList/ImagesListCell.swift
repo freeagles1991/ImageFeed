@@ -11,7 +11,9 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
-    @IBOutlet var cellImage: UIImageView!
+    weak var delegate: ImagesListCellDelegate?
+    
+    @IBOutlet var cellImageView: UIImageView!
     
     @IBOutlet var likeButton: UIButton!
 
@@ -24,27 +26,52 @@ final class ImagesListCell: UITableViewCell {
          super.awakeFromNib()
          setupGradientLayer()
      }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let gradientFrame = CGRect(
+            x: 0,
+            y: cellImageView.bounds.height - gradientHeight,
+            width: cellImageView.bounds.width,
+            height: gradientHeight
+        )
+        gradientLayer.frame = gradientFrame
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cellImageView.kf.cancelDownloadTask()
+    }
 
-     private func setupGradientLayer() {
+    private func setupGradientLayer() {
          gradientLayer.colors = [
              UIColor.clear.cgColor,
              UIColor.black.withAlphaComponent(0.5).cgColor
          ]
          gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
          gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-         cellImage.layer.addSublayer(gradientLayer)
-     }
-
-    override func layoutSubviews() {
-            super.layoutSubviews()
-            // Обновляем фрейм градиентного слоя, чтобы он был на дне изображения и имел фиксированную высоту
-            let gradientFrame = CGRect(
-                x: 0,
-                y: cellImage.bounds.height - gradientHeight,
-                width: cellImage.bounds.width,
-                height: gradientHeight
-            )
-            gradientLayer.frame = gradientFrame
-        }
+         cellImageView.layer.addSublayer(gradientLayer)
+    }
     
+    private func setupImageView() {
+        contentView.addSubview(cellImageView)
+        
+        // Установка ограничений для центрирования UIImageView
+        NSLayoutConstraint.activate([
+            cellImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            cellImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            cellImageView.widthAnchor.constraint(equalToConstant: 100),  // Укажите желаемую ширину
+            cellImageView.heightAnchor.constraint(equalToConstant: 100)  // Укажите желаемую высоту
+        ])
+    }
+    
+    func setIsLiked(isLiked: Bool){
+        let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
+        likeButton.setImage(likeImage, for: .normal)
+    }
+    
+    @IBAction func likeButtonClicked(_ sender: UIButton) {
+        delegate?.imageListCellDidTapLike(self)
+    }
 }
