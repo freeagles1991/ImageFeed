@@ -18,7 +18,7 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     weak var view: WebViewViewControllerProtocol?
     
     func loadAuthWebView() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+        guard var urlComponents = URLComponents(string: AuthConfiguration.standard.authURLString) else {
             print("Нет ссылки на страницу авторизации")
             return
         }
