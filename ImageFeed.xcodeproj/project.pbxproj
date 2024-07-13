@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		320243722C42F1A90073E938 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243712C42F1A90073E938 /* WebViewPresenter.swift */; };
+		320243742C4305620073E938 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243732C4305620073E938 /* AuthHelper.swift */; };
 		32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */; };
 		32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */; };
 		3276056B2C0CA279003E241A /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3276056A2C0CA279003E241A /* AuthConfiguration.swift */; };
@@ -32,7 +33,6 @@
 		32A67D632C15DAD600405408 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D622C15DAD600405408 /* URLSession+data.swift */; };
 		32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D642C19B83D00405408 /* SplashViewController.swift */; };
 		32A67D672C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D662C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift */; };
-		32A67D6A2C1C6B0900405408 /* WebViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D692C1C6B0900405408 /* WebViewConstants.swift */; };
 		32A67D6C2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D6B2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift */; };
 		32A67D6F2C1C6C8B00405408 /* AuthViewControllerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D6E2C1C6C8B00405408 /* AuthViewControllerDelegateProtocol.swift */; };
 		32A67D712C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A67D702C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift */; };
@@ -73,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		320243712C42F1A90073E938 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		320243732C4305620073E938 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3276056A2C0CA279003E241A /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
@@ -101,7 +102,6 @@
 		32A67D622C15DAD600405408 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
 		32A67D642C19B83D00405408 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		32A67D662C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegateProtocol.swift; sourceTree = "<group>"; };
-		32A67D692C1C6B0900405408 /* WebViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewConstants.swift; sourceTree = "<group>"; };
 		32A67D6B2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebViewViewController+WKNavigationDelegate.swift"; sourceTree = "<group>"; };
 		32A67D6E2C1C6C8B00405408 /* AuthViewControllerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegateProtocol.swift; sourceTree = "<group>"; };
 		32A67D702C1C6CE600405408 /* AuthViewController+WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthViewController+WebViewViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 				32A67D662C1C6AA900405408 /* WebViewViewControllerDelegateProtocol.swift */,
 				32A67D6B2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift */,
 				320243712C42F1A90073E938 /* WebViewPresenter.swift */,
-				32A67D692C1C6B0900405408 /* WebViewConstants.swift */,
+				320243732C4305620073E938 /* AuthHelper.swift */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -505,9 +505,9 @@
 				32A67D652C19B83D00405408 /* SplashViewController.swift in Sources */,
 				32A67D742C1C6D6500405408 /* SplashViewController+AuthViewControllerDelegate.swift in Sources */,
 				32A67D8D2C2AE22D00405408 /* URLSession+objectTask.swift in Sources */,
-				32A67D6A2C1C6B0900405408 /* WebViewConstants.swift in Sources */,
 				32A67D762C1C6E6000405408 /* OAuthTokenResponseBody.swift in Sources */,
 				3288CB542BE4F5A8006B5BCC /* AppDelegate.swift in Sources */,
+				320243742C4305620073E938 /* AuthHelper.swift in Sources */,
 				3276056E2C0F0C45003E241A /* AuthViewController.swift in Sources */,
 				3276056B2C0CA279003E241A /* AuthConfiguration.swift in Sources */,
 				32A67D6C2C1C6B8D00405408 /* WebViewViewController+WKNavigationDelegate.swift in Sources */,
