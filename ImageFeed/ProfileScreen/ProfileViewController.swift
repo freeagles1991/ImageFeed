@@ -20,12 +20,12 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     private var statusLabel: UILabel?
     private var exitButtonView: UIButton?
     private var profileImageView = UIImageView()
-    private let profileImage = UIImage(named: "ProfilePhoto")
+    private var profileImage = UIImage(named: "ProfilePhoto")
+    private var profilePlaceholderImage = UIImage(named: "placeholder.jpeg")
     private let profileNameString = "Екатерина Новикова"
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
-    let profileImageService = ProfileImageService.shared
     var presenter: ProfilePresenterProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -144,16 +144,17 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     }
     
     private func updateAvatar() {
-        guard
-            let profileImageURL = profileImageService.smallAvatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        profileImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)
-        profileImageView.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "placeholder.jpeg"),
-            options: [.processor(processor)])
+        self.profileImageView.image = profilePlaceholderImage
+        presenter?.loadAvatar() { [weak self] result in
+            if let downloadedImage = result {
+                guard let self = self else { return }
+                self.profileImage = downloadedImage
+                self.profileImageView.image = self.profileImage
+                print("Изображение загружено и присвоено переменной.")
+            } else {
+                print("Ошибка загрузки изображения.")
+            }
+        }
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true

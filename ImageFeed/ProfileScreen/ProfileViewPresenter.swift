@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import Kingfisher
 
 protocol ProfilePresenterProtocol: AnyObject{
     var view: ProfileViewViewControllerProtocol? {get set}
@@ -13,6 +15,7 @@ protocol ProfilePresenterProtocol: AnyObject{
     func logout()
     func logoutButtonTap()
     func updateProfileDetails() -> Profile
+    func loadAvatar(completion: @escaping (UIImage?) -> Void)
 }
 
 final class ProfileViewPresenter: ProfilePresenterProtocol {
@@ -20,6 +23,7 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     private let profileLogoutService = ProfileLogoutService.shared
     private let alertService = AlertService.shared
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     func viewDidLoad() {
         alertService.profileVCDelegate = self
@@ -28,6 +32,30 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     func updateProfileDetails() -> Profile {
         guard let profile = profileService.profile else { return Profile(username: "empty", name: "empty", loginName: "empty", bio: "empty") }
         return profile
+    }
+    
+    func loadAvatar(completion: @escaping (UIImage?) -> Void) {
+        guard let url = self.getProfileAvatarURL() else { return completion(nil) }
+        KingfisherManager.shared.retrieveImage(with: url) { result in
+            switch result {
+            case .success(let value):
+                // Присваиваем загруженное изображение переменной
+                completion(value.image)
+            case .failure(let error):
+                print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
+    
+    private func getProfileAvatarURL() -> URL? {
+        guard
+            let profileImageURL = profileImageService.smallAvatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            return nil
+        }
+        return url
     }
     
     func logoutButtonTap() {
