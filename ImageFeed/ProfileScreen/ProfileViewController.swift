@@ -9,7 +9,11 @@ import Foundation
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewViewControllerProtocol: UIViewController {
+    var presenter: ProfilePresenterProtocol? { get set }
+}
+
+final class ProfileViewController: UIViewController & ProfileViewViewControllerProtocol {
     
     private var nameLabel: UILabel?
     private var loginLabel: UILabel?
@@ -23,15 +27,14 @@ final class ProfileViewController: UIViewController {
     
     let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
-    private let profileLogoutService = ProfileLogoutService.shared
-    private let alertService = AlertService.shared
+    var presenter: ProfilePresenterProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        alertService.profileVCDelegate = self
+        configure(ProfileViewPresenter())
+        presenter?.viewDidLoad()
         
         self.setupProfileImageView()
         self.setupNameLabel()
@@ -51,6 +54,12 @@ final class ProfileViewController: UIViewController {
                    }
                updateAvatar()
     }
+    
+    ///Конфигурируем Presenter  и Viewer
+    func configure(_ presenter: ProfilePresenterProtocol) {
+             self.presenter = presenter
+             presenter.view = self
+         }
     
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)
@@ -135,10 +144,10 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateAvatar() {
-            guard
-                let profileImageURL = profileImageService.smallAvatarURL,
-                let url = URL(string: profileImageURL)
-            else { return }
+        guard
+            let profileImageURL = profileImageService.smallAvatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
         profileImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)
         profileImageView.kf.setImage(
@@ -150,16 +159,7 @@ final class ProfileViewController: UIViewController {
         profileImageView.clipsToBounds = true
         }
     
-    func logout(){
-        UIBlockingProgressHUD.show()
-        profileLogoutService.logout()
-        let splashViewCotroller = SplashViewController()
-        splashViewCotroller.modalPresentationStyle = .fullScreen
-        self.present(splashViewCotroller, animated: true, completion: nil)
-        UIBlockingProgressHUD.dismiss()
-    }
-    
     @IBAction private func logoutButtonTap(_ sender: UIButton) {
-        alertService.showAlert(title: "Пока!", message: "Точно хотите выйти?", buttonConfirmTitle: "Да, ухожу", buttonDeclineTitle: "Нет, остаюсь")
+        presenter?.logoutButtonTap()
     }
 }
