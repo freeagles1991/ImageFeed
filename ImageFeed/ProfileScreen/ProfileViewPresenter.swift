@@ -12,15 +12,22 @@ protocol ProfilePresenterProtocol: AnyObject{
     func viewDidLoad()
     func logout()
     func logoutButtonTap()
+    func updateProfileDetails() -> Profile
 }
 
 final class ProfileViewPresenter: ProfilePresenterProtocol {
     var view: ProfileViewViewControllerProtocol?
     private let profileLogoutService = ProfileLogoutService.shared
     private let alertService = AlertService.shared
+    private let profileService = ProfileService.shared
     
     func viewDidLoad() {
         alertService.profileVCDelegate = self
+    }
+    
+    func updateProfileDetails() -> Profile {
+        guard let profile = profileService.profile else { return Profile(username: "empty", name: "empty", loginName: "empty", bio: "empty") }
+        return profile
     }
     
     func logoutButtonTap() {

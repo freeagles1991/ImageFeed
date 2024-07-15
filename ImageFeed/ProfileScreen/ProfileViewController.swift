@@ -25,7 +25,6 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
-    let profileService = ProfileService.shared
     let profileImageService = ProfileImageService.shared
     var presenter: ProfilePresenterProtocol?
     
@@ -41,8 +40,8 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
-        guard let profile = profileService.profile else { return }
-        self.updateProfileDetails(profile: profile)
+        self.updateProfileDetails()
+
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
                         forName: ProfileImageService.didChangeNotification,
@@ -137,7 +136,8 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         self.exitButtonView = exitButtonView
     }
     
-    private func updateProfileDetails(profile: Profile){
+    private func updateProfileDetails(){
+        guard let profile = presenter?.updateProfileDetails() else { return }
         nameLabel?.text = profile.name
         statusLabel?.text = profile.bio
         loginLabel?.text = profile.loginName
