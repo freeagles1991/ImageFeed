@@ -40,7 +40,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
-        presenter?.loadAuthWebView()
+        presenter?.viewDidLoad()
     }
     
     func load(request: URLRequest) {
