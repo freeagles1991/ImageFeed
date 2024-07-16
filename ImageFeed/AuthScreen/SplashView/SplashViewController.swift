@@ -41,9 +41,21 @@ final class SplashViewController: UIViewController{
             return
         }
         
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarViewController")
-           
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else {
+                assertionFailure("Could not instantiate TabBarViewController")
+                return
+            }
+        
+        if let viewControllers = tabBarController.viewControllers {
+                for viewController in viewControllers {
+                    if let profileViewController = viewController as? ProfileViewController {
+                        let presenter = ProfilePresenter()
+                        profileViewController.configure(presenter)
+                    }
+                }
+            }
+        
         window.rootViewController = tabBarController
     }
     

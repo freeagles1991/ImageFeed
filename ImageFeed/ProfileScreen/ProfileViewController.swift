@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Kingfisher
 
-protocol ProfileViewViewControllerProtocol: UIViewController {
+public protocol ProfileViewViewControllerProtocol: UIViewController {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateAvatar()
 }
@@ -30,7 +30,6 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure(ProfileViewPresenter())
         
         self.setupProfileImageView()
         self.setupNameLabel()

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Kingfisher
 
-protocol ProfilePresenterProtocol: AnyObject{
+public protocol ProfilePresenterProtocol: AnyObject{
     var view: ProfileViewViewControllerProtocol? {get set}
     func viewDidLoad()
     func logout()
@@ -18,7 +18,7 @@ protocol ProfilePresenterProtocol: AnyObject{
     func loadAvatar(completion: @escaping (UIImage?) -> Void)
 }
 
-final class ProfileViewPresenter: ProfilePresenterProtocol {
+final class ProfilePresenter: ProfilePresenterProtocol {
     var view: ProfileViewViewControllerProtocol?
     private let profileLogoutService = ProfileLogoutService.shared
     private let alertService = AlertService.shared
