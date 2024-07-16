@@ -11,14 +11,16 @@ import Kingfisher
 
 public protocol ProfilePresenterProtocol: AnyObject{
     var view: ProfileViewViewControllerProtocol? {get set}
+    var profile: Profile? {get set}
     func viewDidLoad()
     func logout()
     func logoutButtonTap()
-    func updateProfileDetails() -> Profile
+    func updateProfileDetails()
     func loadAvatar(completion: @escaping (UIImage?) -> Void)
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
+    var profile: Profile?
     var view: ProfileViewViewControllerProtocol?
     private let profileLogoutService = ProfileLogoutService.shared
     private let alertService = AlertService.shared
@@ -41,9 +43,9 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.updateAvatar()
     }
     
-    func updateProfileDetails() -> Profile {
-        guard let profile = profileService.profile else { return Profile(username: "empty", name: "empty", loginName: "empty", bio: "empty") }
-        return profile
+    func updateProfileDetails() {
+        guard let profile = profileService.profile else { return }
+        self.profile = profile
     }
     
     func loadAvatar(completion: @escaping (UIImage?) -> Void) {

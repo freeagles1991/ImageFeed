@@ -123,8 +123,9 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         self.exitButtonView = exitButtonView
     }
     
-    private func updateProfileDetails(){
-        guard let profile = presenter?.updateProfileDetails() else { return }
+    private func updateProfileDetails() {
+        presenter?.updateProfileDetails()
+        guard let profile = presenter?.profile else { return }
         nameLabel?.text = profile.name
         statusLabel?.text = profile.bio
         loginLabel?.text = profile.loginName
