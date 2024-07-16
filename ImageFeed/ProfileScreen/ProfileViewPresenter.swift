@@ -25,8 +25,20 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     func viewDidLoad() {
         alertService.profileVCDelegate = self
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                       object: nil,
+                       queue: .main
+                   ) { [weak view] _ in
+                       guard let view = view else { return }
+                       view.updateAvatar()
+                   }
+        view?.updateAvatar()
     }
     
     func updateProfileDetails() -> Profile {
@@ -36,11 +48,15 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     
     func loadAvatar(completion: @escaping (UIImage?) -> Void) {
         guard let url = self.getProfileAvatarURL() else { return completion(nil) }
-        KingfisherManager.shared.retrieveImage(with: url) { result in
+
+        let processor = RoundCornerImageProcessor(cornerRadius: 50)
+        let imageView = UIImageView()
+
+        imageView.kf.setImage(with: url, options: [.processor(processor)]) { result in
             switch result {
             case .success(let value):
-                // Присваиваем загруженное изображение переменной
-                completion(value.image)
+                imageView.image = value.image
+                completion(imageView.image)
             case .failure(let error):
                 print("Ошибка загрузки изображения: \(error.localizedDescription)")
                 completion(nil)

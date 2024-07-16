@@ -11,9 +11,11 @@ import Kingfisher
 
 protocol ProfileViewViewControllerProtocol: UIViewController {
     var presenter: ProfilePresenterProtocol? { get set }
+    func updateAvatar()
 }
 
 final class ProfileViewController: UIViewController & ProfileViewViewControllerProtocol {
+    var presenter: ProfilePresenterProtocol?
     
     private var nameLabel: UILabel?
     private var loginLabel: UILabel?
@@ -26,14 +28,9 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
-    var presenter: ProfilePresenterProtocol?
-    
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure(ProfileViewPresenter())
-        presenter?.viewDidLoad()
         
         self.setupProfileImageView()
         self.setupNameLabel()
@@ -41,17 +38,8 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         self.setupStatusLabel()
         self.setupExitbutton()
         self.updateProfileDetails()
-
         
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                       object: nil,
-                       queue: .main
-                   ) { [weak self] _ in
-                       guard let self = self else { return }
-                       self.updateAvatar()
-                   }
-               updateAvatar()
+        presenter?.viewDidLoad()
     }
     
     ///Конфигурируем Presenter  и Viewer
@@ -143,13 +131,12 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         loginLabel?.text = profile.loginName
     }
     
-    private func updateAvatar() {
+    func updateAvatar() {
         self.profileImageView.image = profilePlaceholderImage
         presenter?.loadAvatar() { [weak self] result in
-            if let downloadedImage = result {
+            if let imageView = result {
                 guard let self = self else { return }
-                self.profileImage = downloadedImage
-                self.profileImageView.image = self.profileImage
+                self.profileImageView.image = imageView
                 print("Изображение загружено и присвоено переменной.")
             } else {
                 print("Ошибка загрузки изображения.")
