@@ -91,7 +91,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         return url
     }
     
-    func fetchProfileAvatarURL() ->URL? {
+    func fetchProfileAvatarURL() -> URL? {
         return self.getProfileAvatarURL()
     }
     

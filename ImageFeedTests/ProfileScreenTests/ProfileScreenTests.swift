@@ -20,6 +20,7 @@ final class ProfileScreenTests: XCTestCase {
          //then
          XCTAssertTrue(presenter.viewDidLoadCalled) //behaviour verification
     }
+    
     ///Проверяем, что updateProfileDetails не изменяет профиль, если profileService.profile равно nil
     func testUpdateProfileDetails_WithNilProfile() {
         //given
@@ -95,6 +96,36 @@ final class ProfileScreenTests: XCTestCase {
 
         //then
         XCTAssertEqual(url, mockURL)
+    }
+    
+    func testViewControllerCallsUpdateAvatar_Success() {
+        //given
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenterSpy()
+        viewController.configure(presenter)
+        presenter.isAvatarLoadedSuccess = true
+        
+        //when
+        viewController.updateAvatar()
+         
+         //then
+        XCTAssertTrue(presenter.loadAvatarCalled)
+        XCTAssertEqual(viewController.getProfileImageView()?.image, presenter.mockUIImage)
+    }
+    
+    func testViewControllerCallsUpdateAvatar_Failure() {
+        //given
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenterSpy()
+        viewController.configure(presenter)
+        presenter.isAvatarLoadedSuccess = false
+        
+        //when
+        viewController.updateAvatar()
+         
+         //then
+        XCTAssertTrue(presenter.loadAvatarCalled)
+        XCTAssertNotEqual(viewController.getProfileImageView()?.image, presenter.mockUIImage)
     }
 }
 

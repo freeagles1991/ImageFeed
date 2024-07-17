@@ -145,7 +145,11 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-        }
+    }
+    
+    func getProfileImageView() -> UIImageView? {
+        return profileImageView
+    }
     
     @IBAction private func logoutButtonTap(_ sender: UIButton) {
         presenter?.logoutButtonTap()
