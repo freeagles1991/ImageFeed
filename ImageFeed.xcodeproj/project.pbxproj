@@ -15,6 +15,7 @@
 		320243802C4574FC0073E938 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202437F2C4574FC0073E938 /* ProfilePresenter.swift */; };
 		320243852C469A370073E938 /* ProfileScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243842C469A370073E938 /* ProfileScreenTests.swift */; };
 		320243872C46A4A00073E938 /* ProfilePresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243862C46A4A00073E938 /* ProfilePresenterSpy.swift */; };
+		3202438A2C47EA340073E938 /* MockProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243892C47EA340073E938 /* MockProfileService.swift */; };
 		32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */; };
 		32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */; };
 		3276056B2C0CA279003E241A /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3276056A2C0CA279003E241A /* AuthConfiguration.swift */; };
@@ -85,6 +86,7 @@
 		3202437F2C4574FC0073E938 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		320243842C469A370073E938 /* ProfileScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenTests.swift; sourceTree = "<group>"; };
 		320243862C46A4A00073E938 /* ProfilePresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterSpy.swift; sourceTree = "<group>"; };
+		320243892C47EA340073E938 /* MockProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileService.swift; sourceTree = "<group>"; };
 		32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3276056A2C0CA279003E241A /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				320243842C469A370073E938 /* ProfileScreenTests.swift */,
 				320243862C46A4A00073E938 /* ProfilePresenterSpy.swift */,
+				320243892C47EA340073E938 /* MockProfileService.swift */,
 			);
 			path = ProfileScreenTests;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				320243792C453B6E0073E938 /* WebViewTests.swift in Sources */,
+				3202438A2C47EA340073E938 /* MockProfileService.swift in Sources */,
 				320243872C46A4A00073E938 /* ProfilePresenterSpy.swift in Sources */,
 				3202437D2C4542160073E938 /* WebViewViewControllerSpy.swift in Sources */,
 				3202437B2C453E7A0073E938 /* WebViewPresenterSpy.swift in Sources */,

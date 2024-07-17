@@ -36,9 +36,9 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
-        self.updateProfileDetails()
         
         presenter?.viewDidLoad()
+        self.updateProfileDetails()
     }
     
     ///Конфигурируем Presenter  и Viewer

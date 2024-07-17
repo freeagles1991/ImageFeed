@@ -9,7 +9,9 @@ import ImageFeed
 import Foundation
 import UIKit
 
-final class ProfilePresenterSpy: ProfilePresenterProtocol {
+final class ProfilePresenterSpy: ProfilePresenterProtocol {    
+    var profile: ImageFeed.Profile?
+    
     var view: ProfileViewViewControllerProtocol?
     var viewDidLoadCalled: Bool = false
     
@@ -25,14 +27,12 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     
     }
     
-    func updateProfileDetails() -> ImageFeed.Profile {
-        return Profile(username: "", name: "", loginName: "", bio: "")
-    }
-    
     func loadAvatar(completion: @escaping (UIImage?) -> Void) {
         
     }
     
-    
+    func updateProfileDetails() {
+        
+    }
     
 }

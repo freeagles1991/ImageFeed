@@ -110,7 +110,7 @@ extension ImagesListViewController: UITableViewDataSource{
         let imageURLString = imageIndex.thumbImageURL
         let imageURL = URL(string: imageURLString)
         
-        let placeholderImage = UIImage(named: "photo_stub")
+        _ = UIImage(named: "photo_stub")
         
         cell.cellImageView.kf.indicatorType = .activity
         

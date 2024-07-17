@@ -20,8 +20,48 @@ final class ProfileScreenTests: XCTestCase {
          //then
          XCTAssertTrue(presenter.viewDidLoadCalled) //behaviour verification
     }
+    ///Проверяем, что updateProfileDetails не изменяет профиль, если profileService.profile равно nil
+    func testUpdateProfileDetails_WithNilProfile() {
+        //given
+        let mockProfileService = MockProfileService()
+        mockProfileService.profile = nil
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter()
+        viewController.configure(presenter)
+        presenter.configureProfileService(mockProfileService)
+
+        let initialProfile = Profile(username: "username", name: "name", loginName: "loginName", bio: "bio")
+        presenter.profile = initialProfile
+
+        //when
+        presenter.updateProfileDetails()
+
+        //then
+        XCTAssertEqual(presenter.profile?.username, initialProfile.username)
+        XCTAssertEqual(presenter.profile?.name, initialProfile.name)
+        XCTAssertEqual(presenter.profile?.loginName, initialProfile.loginName)
+        XCTAssertEqual(presenter.profile?.bio, initialProfile.bio)
+    }
     
-    func testExample() throws {
-        
+    func testUpdateProfileDetails_WithNoNilProfile() {
+        //given
+        let mockProfileService = MockProfileService()
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter()
+        viewController.configure(presenter)
+        presenter.configureProfileService(mockProfileService)
+
+        let initialProfile = Profile(username: "username", name: "name", loginName: "loginName", bio: "bio")
+        mockProfileService.profile = initialProfile
+
+        //when
+        presenter.updateProfileDetails()
+
+        //then
+        XCTAssertEqual(presenter.profile?.username, initialProfile.username)
+        XCTAssertEqual(presenter.profile?.name, initialProfile.name)
+        XCTAssertEqual(presenter.profile?.loginName, initialProfile.loginName)
+        XCTAssertEqual(presenter.profile?.bio, initialProfile.bio)
     }
 }
+

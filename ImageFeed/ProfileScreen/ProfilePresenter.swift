@@ -24,12 +24,13 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     var view: ProfileViewViewControllerProtocol?
     private let profileLogoutService = ProfileLogoutService.shared
     private let alertService = AlertService.shared
-    private let profileService = ProfileService.shared
+    private var profileService: ProfileServiceProtocol?
     private let profileImageService = ProfileImageService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
+        configureProfileService(ProfileService.shared)
         alertService.profileVCDelegate = self
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
@@ -43,8 +44,12 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.updateAvatar()
     }
     
+    func configureProfileService(_ profileService: ProfileServiceProtocol) {
+        self.profileService = profileService
+    }
+    
     func updateProfileDetails() {
-        guard let profile = profileService.profile else { return }
+        guard let profile = profileService?.profile else { return }
         self.profile = profile
     }
     
