@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class ProfileImageService{
+public protocol ProfileImageServiceProtocol: AnyObject {
+    var smallAvatarURL: String? { get }
+}
+
+final class ProfileImageService: ProfileImageServiceProtocol {
     static let shared = ProfileImageService()
     private init() {}
     

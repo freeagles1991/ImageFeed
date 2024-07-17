@@ -63,5 +63,38 @@ final class ProfileScreenTests: XCTestCase {
         XCTAssertEqual(presenter.profile?.loginName, initialProfile.loginName)
         XCTAssertEqual(presenter.profile?.bio, initialProfile.bio)
     }
+    
+    func testLogout_ProfileLogoutServiceCalled() {
+        //given
+        let mockLogoutService = MockProfileLogoutService()
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter()
+        viewController.configure(presenter)
+        presenter.configureProfileLogoutService(mockLogoutService)
+
+        //when
+        presenter.logout()
+
+        //then
+        XCTAssertTrue(mockLogoutService.isLogoutCalled)
+    }
+    
+    func testFetchProfileImageURL_ProfileImageServiceURL() {
+        //given
+        let mockProfileImageService = MockProfileImageService()
+        let viewController = ProfileViewController()
+        let presenter = ProfilePresenter()
+        viewController.configure(presenter)
+        presenter.configureProfileImageService(mockProfileImageService)
+        
+        guard let avatarURL = mockProfileImageService.smallAvatarURL else { return }
+        let mockURL = URL(string: avatarURL)
+
+        //when
+        let url = presenter.fetchProfileAvatarURL()
+
+        //then
+        XCTAssertEqual(url, mockURL)
+    }
 }
 

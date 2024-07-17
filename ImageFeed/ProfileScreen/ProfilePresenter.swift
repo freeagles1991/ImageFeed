@@ -22,15 +22,17 @@ public protocol ProfilePresenterProtocol: AnyObject{
 final class ProfilePresenter: ProfilePresenterProtocol {
     var profile: Profile?
     var view: ProfileViewViewControllerProtocol?
-    private let profileLogoutService = ProfileLogoutService.shared
+    private var profileLogoutService: ProfileLogoutServiceProtocol?
     private let alertService = AlertService.shared
     private var profileService: ProfileServiceProtocol?
-    private let profileImageService = ProfileImageService.shared
+    private var profileImageService: ProfileImageServiceProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
     func viewDidLoad() {
         configureProfileService(ProfileService.shared)
+        configureProfileLogoutService(ProfileLogoutService.shared)
+        configureProfileImageService(ProfileImageService.shared)
         alertService.profileVCDelegate = self
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
@@ -46,6 +48,14 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     func configureProfileService(_ profileService: ProfileServiceProtocol) {
         self.profileService = profileService
+    }
+    
+    func configureProfileLogoutService(_ profileLogoutService: ProfileLogoutServiceProtocol) {
+        self.profileLogoutService = profileLogoutService
+    }
+    
+    func configureProfileImageService(_ profileImageService: ProfileImageServiceProtocol) {
+        self.profileImageService = profileImageService
     }
     
     func updateProfileDetails() {
@@ -73,7 +83,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     private func getProfileAvatarURL() -> URL? {
         guard
-            let profileImageURL = profileImageService.smallAvatarURL,
+            let profileImageURL = profileImageService?.smallAvatarURL,
             let url = URL(string: profileImageURL)
         else {
             return nil
@@ -81,13 +91,18 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         return url
     }
     
+    func fetchProfileAvatarURL() ->URL? {
+        return self.getProfileAvatarURL()
+    }
+    
+    
     func logoutButtonTap() {
         alertService.showAlert(title: "Пока!", message: "Точно хотите выйти?", buttonConfirmTitle: "Да, ухожу", buttonDeclineTitle: "Нет, остаюсь")
     }
     
     func logout(){
         UIBlockingProgressHUD.show()
-        profileLogoutService.logout()
+        profileLogoutService?.logout()
         let splashViewCotroller = SplashViewController()
         splashViewCotroller.modalPresentationStyle = .fullScreen
         view?.present(splashViewCotroller, animated: true, completion: nil)
