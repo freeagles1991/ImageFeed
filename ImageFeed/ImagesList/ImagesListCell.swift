@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ImagesListCell: UITableViewCell {
+final public class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
     weak var delegate: ImagesListCellDelegate?
@@ -22,12 +22,12 @@ final class ImagesListCell: UITableViewCell {
     private let gradientLayer = CAGradientLayer()
     private let gradientHeight: CGFloat = 30.0 // Фиксированная высота градиента
 
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
          super.awakeFromNib()
          setupGradientLayer()
      }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         let gradientFrame = CGRect(
             x: 0,
@@ -38,7 +38,7 @@ final class ImagesListCell: UITableViewCell {
         gradientLayer.frame = gradientFrame
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         
         cellImageView.kf.cancelDownloadTask()

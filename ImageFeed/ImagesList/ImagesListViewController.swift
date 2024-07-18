@@ -12,6 +12,7 @@ import ProgressHUD
 public protocol ImageListViewControllerProtocol: AnyObject {
     var presenter: ImageListPresenterProtocol? { get set }
     func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int)
+    func progressHUDDismiss()
 }
 
 final class ImagesListViewController: UIViewController & ImageListViewControllerProtocol {
@@ -22,13 +23,6 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     @IBOutlet private var tableView: UITableView!
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     private var imageListServiceObserver: NSObjectProtocol?
     
@@ -87,6 +81,10 @@ final class ImagesListViewController: UIViewController & ImageListViewController
             } completion: { _ in }
         }
     }
+    
+    func progressHUDDismiss(){
+        ProgressHUD.dismiss()
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource{
@@ -104,7 +102,7 @@ extension ImagesListViewController: UITableViewDataSource{
         
         imageListCell.delegate = self
         
-        configCell(for: imageListCell, with: indexPath, in: tableView)
+        presenter?.configCell(for: imageListCell, with: indexPath, in: tableView)
         return imageListCell
     }
     
@@ -113,69 +111,6 @@ extension ImagesListViewController: UITableViewDataSource{
         if indexPath.row == presenter.getPhotos().count - 1 {
             self.fetchInitialPhotos()
         }
-    }
-    
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
-        guard let presenter = presenter else { return }
-        let imageIndex = presenter.getPhotos()[indexPath.row]
-        let imageURLString = imageIndex.thumbImageURL
-        let imageURL = URL(string: imageURLString)
-        
-        _ = UIImage(named: "photo_stub")
-        
-        cell.cellImageView.kf.indicatorType = .activity
-        
-        cell.cellImageView.kf.cancelDownloadTask()
-        cell.cellImageView.kf.setImage(
-            with: imageURL,
-            placeholder: createPlaceholderImage(forCellWith: tableView.rectForRow(at: indexPath)),
-            options: nil) { completition in
-                switch completition {
-                case .success(_):
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
-                    ProgressHUD.dismiss()
-                    print("ImagesListViewController.configCell: Загрузка фото завершена")
-                case .failure(let error):
-                    ProgressHUD.dismiss()
-                    print("ImagesListViewController.configCell: Загрузка фото НЕ завершена. Код - \(error)")
-                }
-            }
-        
-        let isLiked = imageIndex.isLiked
-        let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
-        cell.likeButton.setImage(likeImage, for: .normal)
-        
-        guard let imageDate = imageIndex.createdAt else {
-            cell.dateLabel.text = dateFormatter.string(from: Date())
-            return
-        }
-        cell.dateLabel.text = dateFormatter.string(from: imageDate)
-    }
-    
-    private func createPlaceholderImage(forCellWith frame: CGRect) -> UIImage {
-        let placeholderView = UIView(frame: CGRect(origin: .zero, size: frame.size))
-        placeholderView.backgroundColor = .white.withAlphaComponent(0.3)
-        
-        guard let imageStub = UIImage(named: "photo_stub") else { return UIImage() }
-        let imageStubView = UIImageView(image: imageStub)
-        imageStubView.translatesAutoresizingMaskIntoConstraints = false
-        placeholderView.addSubview(imageStubView)
-        
-        NSLayoutConstraint.activate([
-            imageStubView.centerXAnchor.constraint(equalTo: placeholderView.centerXAnchor),
-            imageStubView.centerYAnchor.constraint(equalTo: placeholderView.centerYAnchor),
-            imageStubView.heightAnchor.constraint(equalToConstant: 75),
-            imageStubView.widthAnchor.constraint(equalToConstant: 83)
-        ])
-        
-        placeholderView.layoutIfNeeded()
-        
-        UIGraphicsBeginImageContextWithOptions(placeholderView.bounds.size, false, 0.0)
-        placeholderView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let placeholderImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return placeholderImage ?? UIImage()
     }
     
     private func fetchInitialPhotos() {
