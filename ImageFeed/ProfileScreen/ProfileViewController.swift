@@ -43,9 +43,9 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     
     ///Конфигурируем Presenter  и Viewer
     func configure(_ presenter: ProfilePresenterProtocol) {
-             self.presenter = presenter
-             presenter.view = self
-         }
+        self.presenter = presenter
+        presenter.view = self
+    }
     
     private func setupProfileImageView(){
         let imageView = UIImageView(image: profileImage)

@@ -9,16 +9,19 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-final class ImagesListViewController: UIViewController{
-    private var photos: [Photo] = []
-    private let imagesListService = ImagesListService.shared
+public protocol ImageListViewControllerProtocol: AnyObject {
+    var presenter: ImageListPresenterProtocol? { get set }
+    func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int)
+}
+
+final class ImagesListViewController: UIViewController & ImageListViewControllerProtocol {
+    var presenter: ImageListPresenterProtocol?
+    
     private let alertService = AlertService.shared
     
     @IBOutlet private var tableView: UITableView!
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -31,6 +34,8 @@ final class ImagesListViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configure(ImageListPresenter())
+        
         self.fetchInitialPhotos()
         alertService.delegate = self
         
@@ -40,7 +45,7 @@ final class ImagesListViewController: UIViewController{
                        queue: .main
                    ) { [weak self] _ in
                        guard let self = self else { return }
-                       self.updateTableViewAnimated()
+                       self.presenter?.updateTableViewAnimated()
                    }
         
         tableView.rowHeight = 200
@@ -56,8 +61,8 @@ final class ImagesListViewController: UIViewController{
                 assertionFailure("Invalid segue destination")
                 return
             }
-            
-            let imageUrlString = photos[indexPath.row].largeImageURL
+            guard let presenter = presenter else { return }
+            let imageUrlString = presenter.getPhotos()[indexPath.row].largeImageURL
             if let imageUrl = URL(string: imageUrlString) {
                 viewController.imageUrl = imageUrl
             } else {
@@ -66,13 +71,16 @@ final class ImagesListViewController: UIViewController{
         }
     }
     
-    private func updateTableViewAnimated(){
-        let oldCount = photos.count
-        let newCount = imagesListService.photos.count
-        photos = imagesListService.photos
-        if oldCount != newCount {
+    ///Конфигурируем Presenter  и Viewer
+    func configure(_ presenter: ImageListPresenterProtocol) {
+        self.presenter = presenter
+        presenter.view = self
+    }
+    
+    func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int) {
+        if oldPhotosCount != newPhotosCount {
             tableView.performBatchUpdates {
-                let indexPaths = (oldCount..<newCount).map { i in
+                let indexPaths = (oldPhotosCount..<newPhotosCount).map { i in
                     IndexPath(row: i, section: 0)
                 }
                 tableView.insertRows(at: indexPaths, with: .automatic)
@@ -83,7 +91,8 @@ final class ImagesListViewController: UIViewController{
 
 extension ImagesListViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        guard let presenter = presenter else { return 0 }
+        return presenter.getPhotos().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,13 +109,15 @@ extension ImagesListViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == photos.count - 1 {
+        guard let presenter = presenter else { return }
+        if indexPath.row == presenter.getPhotos().count - 1 {
             self.fetchInitialPhotos()
         }
     }
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
-        let imageIndex = photos[indexPath.row]
+        guard let presenter = presenter else { return }
+        let imageIndex = presenter.getPhotos()[indexPath.row]
         let imageURLString = imageIndex.thumbImageURL
         let imageURL = URL(string: imageURLString)
         
@@ -168,10 +179,12 @@ extension ImagesListViewController: UITableViewDataSource{
     }
     
     private func fetchInitialPhotos() {
-        ImagesListService.shared.fetchPhotosNextPage { result in
+        ImagesListService.shared.fetchPhotosNextPage { [weak self] result in
             switch result {
             case .success(let newPhotos):
-                self.photos.append(contentsOf: newPhotos)
+                guard let self = self else { return }
+                guard let presenter = self.presenter else { return }
+                presenter.appendPhotos(newPhotos)
                 self.tableView.reloadData()
             case .failure(let error):
                 print("Ошибка загрузки фото: \(error)")
@@ -182,7 +195,8 @@ extension ImagesListViewController: UITableViewDataSource{
 
 extension ImagesListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        let imageIndex = photos[indexPath.row]
+        guard let presenter = presenter else { return CGFloat() }
+        let imageIndex = presenter.getPhotos()[indexPath.row]
         let imageWidth = imageIndex.size.width
         let imageHeight = imageIndex.size.height
         
@@ -201,17 +215,17 @@ extension ImagesListViewController: UITableViewDelegate{
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-            let photo = photos[indexPath.row]
+        guard let presenter = presenter else { return }
+        let photo = presenter.getPhotos()[indexPath.row]
         
         cell.setIsLiked(isLiked: !photo.isLiked)
         UIBlockingProgressHUD.show()
         
-        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
+        presenter.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
             guard let self = self else { return }
             switch result{
             case .success():
                 print("ImagesListViewController: Лайк изменен")
-                self.photos = self.imagesListService.photos
                 UIBlockingProgressHUD.dismiss()
             case .failure(let error):
                 print("ImagesListViewController: Лайк НЕ изменен - \(error)")
