@@ -25,23 +25,13 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
-    private var imageListServiceObserver: NSObjectProtocol?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configure(ImageListPresenter())
-        
+        presenter?.viewDidLoad()
         presenter?.fetchInitialPhotos()
-        alertService.delegate = self
         
-        imageListServiceObserver = NotificationCenter.default.addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                       object: nil,
-                       queue: .main
-                   ) { [weak self] _ in
-                       guard let self = self else { return }
-                       self.presenter?.updateTableViewAnimated()
-                   }
+        alertService.delegate = self
         
         tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)

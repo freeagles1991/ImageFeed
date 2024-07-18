@@ -11,6 +11,7 @@ import UIKit
 public protocol ImageListPresenterProtocol: AnyObject{
     var view: ImageListViewControllerProtocol? {get set}
     var photos: [Photo] {get set}
+    func viewDidLoad()
     func getPhotos() -> [Photo]
     func setPhotos(_ newPhotos: [Photo])
     func appendPhotos(_ newPhotos: [Photo])
@@ -26,12 +27,25 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     private let imagesListService = ImagesListService.shared
     internal var photos: [Photo] = []
     
+    private var imageListServiceObserver: NSObjectProtocol?
+    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    func viewDidLoad(){
+        imageListServiceObserver = NotificationCenter.default.addObserver(
+                        forName: ProfileImageService.didChangeNotification,
+                       object: nil,
+                       queue: .main
+                   ) { [weak self] _ in
+                       guard let self = self else { return }
+                       self.updateTableViewAnimated()
+                   }
+    }
     
     func getImageListPhotosFromService() -> [Photo] {
         let photos = imagesListService.photos
