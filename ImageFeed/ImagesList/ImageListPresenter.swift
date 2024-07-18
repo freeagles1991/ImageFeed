@@ -18,6 +18,7 @@ public protocol ImageListPresenterProtocol: AnyObject{
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void)
     func updateTableViewAnimated()
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView)
+    func fetchInitialPhotos()
 }
 
 final class ImageListPresenter: ImageListPresenterProtocol {
@@ -129,5 +130,18 @@ final class ImageListPresenter: ImageListPresenterProtocol {
         UIGraphicsEndImageContext()
         
         return placeholderImage ?? UIImage()
+    }
+    
+    func fetchInitialPhotos() {
+        ImagesListService.shared.fetchPhotosNextPage { [weak self] result in
+            switch result {
+            case .success(let newPhotos):
+                guard let self = self else { return }
+                self.appendPhotos(newPhotos)
+                self.view?.reloadData()
+            case .failure(let error):
+                print("Ошибка загрузки фото: \(error)")
+            }
+        }
     }
 }

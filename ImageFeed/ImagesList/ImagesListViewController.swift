@@ -12,6 +12,7 @@ import ProgressHUD
 public protocol ImageListViewControllerProtocol: AnyObject {
     var presenter: ImageListPresenterProtocol? { get set }
     func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int)
+    func reloadData()
     func progressHUDDismiss()
 }
 
@@ -30,7 +31,7 @@ final class ImagesListViewController: UIViewController & ImageListViewController
         super.viewDidLoad()
         self.configure(ImageListPresenter())
         
-        self.fetchInitialPhotos()
+        presenter?.fetchInitialPhotos()
         alertService.delegate = self
         
         imageListServiceObserver = NotificationCenter.default.addObserver(
@@ -85,6 +86,10 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     func progressHUDDismiss(){
         ProgressHUD.dismiss()
     }
+    
+    func reloadData(){
+        tableView.reloadData()
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource{
@@ -109,21 +114,7 @@ extension ImagesListViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let presenter = presenter else { return }
         if indexPath.row == presenter.getPhotos().count - 1 {
-            self.fetchInitialPhotos()
-        }
-    }
-    
-    private func fetchInitialPhotos() {
-        ImagesListService.shared.fetchPhotosNextPage { [weak self] result in
-            switch result {
-            case .success(let newPhotos):
-                guard let self = self else { return }
-                guard let presenter = self.presenter else { return }
-                presenter.appendPhotos(newPhotos)
-                self.tableView.reloadData()
-            case .failure(let error):
-                print("Ошибка загрузки фото: \(error)")
-            }
+            presenter.fetchInitialPhotos()
         }
     }
 }
