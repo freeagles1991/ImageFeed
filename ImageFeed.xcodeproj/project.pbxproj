@@ -19,6 +19,8 @@
 		3202438C2C4811280073E938 /* MockProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202438B2C4811280073E938 /* MockProfileLogoutService.swift */; };
 		3202438E2C4816D50073E938 /* MockProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202438D2C4816D50073E938 /* MockProfileImageService.swift */; };
 		320243902C48274E0073E938 /* ImageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202438F2C48274E0073E938 /* ImageListPresenter.swift */; };
+		320243932C4AB2B50073E938 /* ImageListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243922C4AB2B50073E938 /* ImageListTests.swift */; };
+		320243952C4AB5A00073E938 /* ImageListPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320243942C4AB5A00073E938 /* ImageListPresenterSpy.swift */; };
 		32370AC52BF7938C00BEBB0C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */; };
 		32370AC72BF8C58500BEBB0C /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */; };
 		3276056B2C0CA279003E241A /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3276056A2C0CA279003E241A /* AuthConfiguration.swift */; };
@@ -93,6 +95,8 @@
 		3202438B2C4811280073E938 /* MockProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileLogoutService.swift; sourceTree = "<group>"; };
 		3202438D2C4816D50073E938 /* MockProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProfileImageService.swift; sourceTree = "<group>"; };
 		3202438F2C48274E0073E938 /* ImageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenter.swift; sourceTree = "<group>"; };
+		320243922C4AB2B50073E938 /* ImageListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListTests.swift; sourceTree = "<group>"; };
+		320243942C4AB5A00073E938 /* ImageListPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenterSpy.swift; sourceTree = "<group>"; };
 		32370AC42BF7938C00BEBB0C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		32370AC62BF8C58500BEBB0C /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3276056A2C0CA279003E241A /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
@@ -188,6 +192,15 @@
 			path = ProfileScreenTests;
 			sourceTree = "<group>";
 		};
+		320243912C4AB20F0073E938 /* ImageListTests */ = {
+			isa = PBXGroup;
+			children = (
+				320243922C4AB2B50073E938 /* ImageListTests.swift */,
+				320243942C4AB5A00073E938 /* ImageListPresenterSpy.swift */,
+			);
+			path = ImageListTests;
+			sourceTree = "<group>";
+		};
 		3276056C2C0F0C26003E241A /* AuthScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +255,7 @@
 		3288CB692BE4F5AC006B5BCC /* ImageFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				320243912C4AB20F0073E938 /* ImageListTests */,
 				320243812C4699F60073E938 /* ProfileScreenTests */,
 				3202437E2C4545320073E938 /* WebViewTests */,
 			);
@@ -581,8 +595,10 @@
 			files = (
 				3202438C2C4811280073E938 /* MockProfileLogoutService.swift in Sources */,
 				320243792C453B6E0073E938 /* WebViewTests.swift in Sources */,
+				320243932C4AB2B50073E938 /* ImageListTests.swift in Sources */,
 				3202438A2C47EA340073E938 /* MockProfileService.swift in Sources */,
 				320243872C46A4A00073E938 /* ProfilePresenterSpy.swift in Sources */,
+				320243952C4AB5A00073E938 /* ImageListPresenterSpy.swift in Sources */,
 				3202437D2C4542160073E938 /* WebViewViewControllerSpy.swift in Sources */,
 				3202437B2C453E7A0073E938 /* WebViewPresenterSpy.swift in Sources */,
 				320243852C469A370073E938 /* ProfileScreenTests.swift in Sources */,

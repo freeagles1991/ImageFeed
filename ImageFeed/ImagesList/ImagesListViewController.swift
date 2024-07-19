@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-public protocol ImageListViewControllerProtocol: AnyObject {
+public protocol ImageListViewControllerProtocol: UIViewController {
     var presenter: ImageListPresenterProtocol? { get set }
     func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int)
     func reloadData()
@@ -27,9 +27,9 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configure(ImageListPresenter())
-        presenter?.viewDidLoad()
-        presenter?.fetchInitialPhotos()
+        guard let presenter = presenter else { return }
+        presenter.viewDidLoad()
+        presenter.fetchInitialPhotos()
         
         alertService.delegate = self
         

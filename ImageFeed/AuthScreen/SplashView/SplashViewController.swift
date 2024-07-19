@@ -47,15 +47,6 @@ final class SplashViewController: UIViewController{
                 return
             }
         
-        if let viewControllers = tabBarController.viewControllers {
-                for viewController in viewControllers {
-                    if let profileViewController = viewController as? ProfileViewController {
-                        let presenter = ProfilePresenter()
-                        profileViewController.configure(presenter)
-                    }
-                }
-            }
-        
         window.rootViewController = tabBarController
     }
     

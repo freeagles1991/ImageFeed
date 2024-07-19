@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public protocol ImageListPresenterProtocol: AnyObject{
+public protocol ImageListPresenterProtocol: AnyObject {
     var view: ImageListViewControllerProtocol? {get set}
     var photos: [Photo] {get set}
     func viewDidLoad()
