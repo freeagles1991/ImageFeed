@@ -10,6 +10,7 @@ import UIKit
 
 public protocol ImageListPresenterProtocol: AnyObject {
     var view: ImageListViewControllerProtocol? {get set}
+    var imagesListService: ImagesListServiceProtocol? {get set}
     var photos: [Photo] {get set}
     func viewDidLoad()
     func getPhotos() -> [Photo]
@@ -20,11 +21,12 @@ public protocol ImageListPresenterProtocol: AnyObject {
     func updateTableViewAnimated()
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView)
     func fetchInitialPhotos()
+    func configureImagesListService (_ imagesListService: ImagesListServiceProtocol)
 }
 
 final class ImageListPresenter: ImageListPresenterProtocol {
     var view: ImageListViewControllerProtocol?
-    private let imagesListService = ImagesListService.shared
+    internal var imagesListService: ImagesListServiceProtocol?
     internal var photos: [Photo] = []
     
     private var imageListServiceObserver: NSObjectProtocol?
@@ -37,6 +39,7 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     }()
     
     func viewDidLoad(){
+        configureImagesListService(ImagesListService.shared)
         imageListServiceObserver = NotificationCenter.default.addObserver(
                         forName: ProfileImageService.didChangeNotification,
                        object: nil,
@@ -47,8 +50,12 @@ final class ImageListPresenter: ImageListPresenterProtocol {
                    }
     }
     
+    func configureImagesListService (_ imagesListService: ImagesListServiceProtocol) {
+        self.imagesListService = imagesListService
+    }
+    
     func getImageListPhotosFromService() -> [Photo] {
-        let photos = imagesListService.photos
+        guard let photos = imagesListService?.photos else { return [] }
         return photos
     }
     
@@ -65,11 +72,12 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
-        imagesListService.changeLike(photoId: photoId, isLike: isLike) { [weak self] result in
+        imagesListService?.changeLike(photoId: photoId, isLike: isLike) { [weak self] result in
             guard let self = self else { return }
             switch result{
             case .success():
-                self.photos = self.imagesListService.photos
+                guard let photos = self.imagesListService?.photos else { return }
+                self.photos = photos
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -78,9 +86,10 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     }
     
     func updateTableViewAnimated() {
-        let oldCount = photos.count
-        let newCount = imagesListService.photos.count
-        photos = imagesListService.photos
+        guard let photos = self.imagesListService?.photos else { return }
+        let oldCount = self.photos.count
+        let newCount = photos.count
+        self.photos = photos
         view?.updateTableViewAnimated(oldPhotosCount: oldCount, newPhotosCount: newCount)
     }
     
@@ -147,7 +156,7 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     }
     
     func fetchInitialPhotos() {
-        ImagesListService.shared.fetchPhotosNextPage { [weak self] result in
+        imagesListService?.fetchPhotosNextPage { [weak self] result in
             switch result {
             case .success(let newPhotos):
                 guard let self = self else { return }
