@@ -61,4 +61,47 @@ final class ImageListTests: XCTestCase {
         // Then
         XCTAssertFalse(presenter.reloadDataCalled)
     }
+    
+    func testImageListCellDidTapLikeSuccess() {
+        // Given
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        viewController.loadViewIfNeeded()
+        let presenter = ImageListPresenter()
+        viewController.configure(presenter)
+        let mockImagesListService = MockImagesListService()
+        presenter.configureImagesListService(mockImagesListService)
+        
+        let spyViewController = ImagesListViewControllerSpy()
+        spyViewController.configure(presenter)
+        let cell = ImagesListCell()
+
+        // When
+        spyViewController.imageListCellDidTapLike(cell)
+
+        // Then
+        XCTAssertTrue(spyViewController.setIsLiked)
+    }
+    
+    func testImageListCellDidTapLikeFailure() {
+        // Given
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        viewController.loadViewIfNeeded()
+        let presenter = ImageListPresenter()
+        viewController.configure(presenter)
+        let mockImagesListService = MockImagesListService()
+        presenter.configureImagesListService(mockImagesListService)
+        
+        let spyViewController = ImagesListViewControllerSpy()
+        spyViewController.configure(presenter)
+        let cell = ImagesListCell()
+        mockImagesListService.shouldReturnError = true
+
+        // When
+        spyViewController.imageListCellDidTapLike(cell)
+
+        // Then
+        XCTAssertFalse(spyViewController.setIsLiked)
+    }
 }

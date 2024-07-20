@@ -14,6 +14,8 @@ public protocol ImageListViewControllerProtocol: UIViewController {
     func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int)
     func reloadData()
     func progressHUDDismiss()
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+    func configure(_ presenter: ImageListPresenterProtocol)
 }
 
 final class ImagesListViewController: UIViewController & ImageListViewControllerProtocol {
