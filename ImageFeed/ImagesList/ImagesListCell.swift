@@ -69,6 +69,9 @@ final public class ImagesListCell: UITableViewCell {
     func setIsLiked(isLiked: Bool){
         let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
         likeButton.setImage(likeImage, for: .normal)
+        let likeButtonID = isLiked ? String("like button on") : String("like button off")
+        likeButton.accessibilityIdentifier = likeButtonID
+        
     }
     
     @IBAction func likeButtonClicked(_ sender: UIButton) {
