@@ -30,7 +30,7 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
         
         loginTextField.tap()
-        loginTextField.typeText("dmitrynerovny@gmail.com")
+        loginTextField.typeText("")
         startPoint.referencedElement.swipeUp()
 
         
@@ -40,10 +40,10 @@ final class ImageFeedUITests: XCTestCase {
         passwordTextField.tap()
         // Ввести пароль
             if passwordTextField.hasFocus {
-                passwordTextField.typeText("wofse3-fubnex-xisxyH")
+                passwordTextField.typeText("")
             } else {
                 passwordTextField.tap()
-                passwordTextField.typeText("wofse3-fubnex-xisxyH")
+                passwordTextField.typeText("")
             }
         webView.swipeUp()
         
