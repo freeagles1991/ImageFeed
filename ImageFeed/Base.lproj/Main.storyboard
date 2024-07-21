@@ -153,6 +153,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNg-Hi-YOC" userLabel="BackwardButton">
                                 <rect key="frame" x="9" y="11" width="24" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="nav back button white" label="nav back button white"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="9Yf-dK-Ap3"/>
                                     <constraint firstAttribute="height" constant="24" id="WQu-fD-K2l"/>

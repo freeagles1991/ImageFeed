@@ -27,6 +27,8 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
+    let testMode =  ProcessInfo.processInfo.arguments.contains("testMode")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let presenter = presenter else { return }
@@ -104,10 +106,13 @@ extension ImagesListViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let presenter = presenter else { return }
-        if indexPath.row == presenter.getPhotos().count - 1 {
-            presenter.fetchInitialPhotos()
+        if !testMode{
+            guard let presenter = presenter else { return }
+            if indexPath.row == presenter.getPhotos().count - 1 {
+                presenter.fetchInitialPhotos()
+            }
         }
+        
     }
 }
 
