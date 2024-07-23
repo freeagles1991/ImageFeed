@@ -34,8 +34,8 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     }
     
     func code(from url: URL) -> String? {
-            authHelper.code(from: url)
-        }
+        authHelper.code(from: url)
+    }
     
     func didUpdateProgressValue(_ newValue: Double) {
         let newProgressValue = Float(newValue)

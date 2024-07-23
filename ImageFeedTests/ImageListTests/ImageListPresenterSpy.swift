@@ -29,8 +29,12 @@ final class ImageListPresenterSpy: ImageListPresenterProtocol {
         return []
     }
     
-    func setPhotos(_ newPhotos: [ImageFeed.Photo]) {
+    func getPhotoURL(indexPath: Int) -> URL? {
+        return nil
+    }
     
+    func setPhotos(_ newPhotos: [ImageFeed.Photo]) {
+        
     }
     
     func appendPhotos(_ newPhotos: [ImageFeed.Photo]) {
@@ -42,15 +46,15 @@ final class ImageListPresenterSpy: ImageListPresenterProtocol {
     }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
-    
+        
     }
     
     func updateTableViewAnimated() {
-    
+        
     }
     
     func configCell(for cell: ImageFeed.ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
-
+        
     }
     
     func fetchInitialPhotos() {

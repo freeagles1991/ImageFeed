@@ -30,11 +30,11 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     override func viewWillAppear(_ animated: Bool) {
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
-            options: [],
-            changeHandler: { [weak self] _, _ in
-                guard let self = self else { return }
-                presenter?.didUpdateProgressValue(webView.estimatedProgress)
-            })
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 presenter?.didUpdateProgressValue(webView.estimatedProgress)
+             })
     }
     
     override func viewDidLoad() {
@@ -46,11 +46,11 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func load(request: URLRequest) {
         webView.load(request)
     }
-
+    
     func setProgressValue(_ newValue: Float) {
         progressView.progress = newValue
     }
-
+    
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }

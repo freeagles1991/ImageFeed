@@ -15,7 +15,7 @@ final class ImageFeedUITests: XCTestCase {
         app.launchArguments = ["testMode"]
         app.launch()
     }
-
+    
     func testAuth() throws {
         let authenticateButton = app.buttons["Authenticate"]
         XCTAssertTrue(authenticateButton.waitForExistence(timeout: 10), "Кнопка 'Authenticate' не появилась вовремя")
@@ -32,19 +32,19 @@ final class ImageFeedUITests: XCTestCase {
         loginTextField.tap()
         loginTextField.typeText("")
         startPoint.referencedElement.swipeUp()
-
+        
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
         
         passwordTextField.tap()
         // Ввести пароль
-            if passwordTextField.hasFocus {
-                passwordTextField.typeText("")
-            } else {
-                passwordTextField.tap()
-                passwordTextField.typeText("")
-            }
+        if passwordTextField.hasFocus {
+            passwordTextField.typeText("")
+        } else {
+            passwordTextField.tap()
+            passwordTextField.typeText("")
+        }
         webView.swipeUp()
         
         // Нажать кнопку логина
@@ -94,7 +94,7 @@ final class ImageFeedUITests: XCTestCase {
     func testProfile() throws {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
-       
+        
         XCTAssertTrue(app.staticTexts["Dmitry Nerovny"].exists)
         XCTAssertTrue(app.staticTexts["@freeagles"].exists)
         

@@ -20,7 +20,7 @@ final class ImagesListViewControllerSpy: UIViewController & ImageListViewControl
     }
     
     func updateTableViewAnimated(oldPhotosCount: Int, newPhotosCount: Int) {
-    
+        
     }
     
     func reloadData() {

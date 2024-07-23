@@ -17,10 +17,10 @@ final class ImageListTests: XCTestCase {
         viewController.configure(presenter)
         
         //when
-         _ = viewController.view
-         
-         //then
-         XCTAssertTrue(presenter.viewDidLoadCalled) //behaviour verification
+        _ = viewController.view
+        
+        //then
+        XCTAssertTrue(presenter.viewDidLoadCalled) //behaviour verification
     }
     
     func testFetchInitialPhotosSuccess() {
@@ -34,10 +34,10 @@ final class ImageListTests: XCTestCase {
         presenter.configureImagesListService(mockImagesListService)
         let expectedPhotos = [Photo.emptyPhoto, Photo.emptyPhoto]
         mockImagesListService.photos = expectedPhotos
-
+        
         // When
         presenter.fetchInitialPhotos()
-
+        
         // Then
         XCTAssertEqual(presenter.photos, expectedPhotos)
         XCTAssertTrue(presenter.reloadDataCalled)
@@ -54,10 +54,10 @@ final class ImageListTests: XCTestCase {
         presenter.configureImagesListService(mockImagesListService)
         mockImagesListService.shouldReturnError = true
         
-
+        
         // When
         presenter.fetchInitialPhotos()
-
+        
         // Then
         XCTAssertFalse(presenter.reloadDataCalled)
     }
@@ -75,10 +75,10 @@ final class ImageListTests: XCTestCase {
         let spyViewController = ImagesListViewControllerSpy()
         spyViewController.configure(presenter)
         let cell = ImagesListCell()
-
+        
         // When
         spyViewController.imageListCellDidTapLike(cell)
-
+        
         // Then
         XCTAssertTrue(spyViewController.setIsLiked)
     }
@@ -97,10 +97,10 @@ final class ImageListTests: XCTestCase {
         spyViewController.configure(presenter)
         let cell = ImagesListCell()
         mockImagesListService.shouldReturnError = true
-
+        
         // When
         spyViewController.imageListCellDidTapLike(cell)
-
+        
         // Then
         XCTAssertFalse(spyViewController.setIsLiked)
     }

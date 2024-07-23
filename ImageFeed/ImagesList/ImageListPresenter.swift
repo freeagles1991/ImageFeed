@@ -22,6 +22,7 @@ public protocol ImageListPresenterProtocol: AnyObject {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView)
     func fetchInitialPhotos()
     func configureImagesListService (_ imagesListService: ImagesListServiceProtocol)
+    func getPhotoURL(indexPath: Int) -> URL?
 }
 
 final class ImageListPresenter: ImageListPresenterProtocol {
@@ -41,13 +42,13 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     func viewDidLoad(){
         configureImagesListService(ImagesListService.shared)
         imageListServiceObserver = NotificationCenter.default.addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                       object: nil,
-                       queue: .main
-                   ) { [weak self] _ in
-                       guard let self = self else { return }
-                       self.updateTableViewAnimated()
-                   }
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.updateTableViewAnimated()
+        }
     }
     
     func configureImagesListService (_ imagesListService: ImagesListServiceProtocol) {
@@ -69,6 +70,11 @@ final class ImageListPresenter: ImageListPresenterProtocol {
     
     func getPhotos() -> [Photo] {
         return self.photos
+    }
+    
+    func getPhotoURL(indexPath: Int) -> URL?{
+        let url = URL(string: self.photos[indexPath].largeImageURL)
+        return url
     }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {

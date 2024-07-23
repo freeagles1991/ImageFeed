@@ -51,8 +51,7 @@ final class ImagesListViewController: UIViewController & ImageListViewController
                 return
             }
             guard let presenter = presenter else { return }
-            let imageUrlString = presenter.getPhotos()[indexPath.row].largeImageURL
-            if let imageUrl = URL(string: imageUrlString) {
+            if let imageUrl = presenter.getPhotoURL(indexPath: indexPath.row) {
                 viewController.imageUrl = imageUrl
             } else {
                 super.prepare(for: segue, sender: sender)
@@ -131,8 +130,8 @@ extension ImagesListViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
-        }
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
+    }
 }
 
 extension ImagesListViewController: ImagesListCellDelegate {

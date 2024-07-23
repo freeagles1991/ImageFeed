@@ -16,16 +16,16 @@ final public class ImagesListCell: UITableViewCell {
     @IBOutlet var cellImageView: UIImageView!
     
     @IBOutlet var likeButton: UIButton!
-
+    
     @IBOutlet var dateLabel: UILabel!
     
     private let gradientLayer = CAGradientLayer()
     private let gradientHeight: CGFloat = 30.0 // Фиксированная высота градиента
-
+    
     public override func awakeFromNib() {
-         super.awakeFromNib()
-         setupGradientLayer()
-     }
+        super.awakeFromNib()
+        setupGradientLayer()
+    }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
@@ -43,15 +43,15 @@ final public class ImagesListCell: UITableViewCell {
         
         cellImageView.kf.cancelDownloadTask()
     }
-
+    
     private func setupGradientLayer() {
-         gradientLayer.colors = [
-             UIColor.clear.cgColor,
-             UIColor.black.withAlphaComponent(0.5).cgColor
-         ]
-         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-         cellImageView.layer.addSublayer(gradientLayer)
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.black.withAlphaComponent(0.5).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        cellImageView.layer.addSublayer(gradientLayer)
     }
     
     private func setupImageView() {

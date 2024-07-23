@@ -36,13 +36,13 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         alertService.profileVCDelegate = self
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                       object: nil,
-                       queue: .main
-                   ) { [weak view] _ in
-                       guard let view = view else { return }
-                       view.updateAvatar()
-                   }
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak view] _ in
+            guard let view = view else { return }
+            view.updateAvatar()
+        }
         view?.updateAvatar()
     }
     
@@ -65,10 +65,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     func loadAvatar(completion: @escaping (UIImage?) -> Void) {
         guard let url = self.getProfileAvatarURL() else { return completion(nil) }
-
+        
         let processor = RoundCornerImageProcessor(cornerRadius: 50)
         let imageView = UIImageView()
-
+        
         imageView.kf.setImage(with: url, options: [.processor(processor)]) { result in
             switch result {
             case .success(let value):

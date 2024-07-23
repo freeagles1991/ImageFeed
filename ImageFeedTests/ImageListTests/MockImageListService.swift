@@ -11,7 +11,7 @@ import Foundation
 class MockImagesListService: ImagesListServiceProtocol {
     var shouldReturnError = false
     var photos = [Photo]()
-
+    
     func fetchPhotosNextPage(completion: @escaping (Result<[Photo], Error>) -> Void) {
         if shouldReturnError {
             let error = NSError()
