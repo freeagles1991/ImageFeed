@@ -64,7 +64,7 @@ final class SingleImageViewController: UIViewController{
             with: imageUrl) { [weak self] result in
                 UIBlockingProgressHUD.dismiss()
                 switch result{
-                case .success(let photo):
+                case .success(_):
                     guard let self = self else { return }
                     self.image = self.imageView.image
                     guard let image = image else { return }

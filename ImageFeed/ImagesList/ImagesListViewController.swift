@@ -51,7 +51,7 @@ final class ImagesListViewController: UIViewController & ImageListViewController
                 return
             }
             guard let presenter = presenter else { return }
-            if let imageUrl = presenter.getPhotoURL(indexPath: indexPath.row) {
+            if let imageUrl = presenter.getPhotoURL(indexPath: indexPath) {
                 viewController.imageUrl = imageUrl
             } else {
                 super.prepare(for: segue, sender: sender)
@@ -83,6 +83,69 @@ final class ImagesListViewController: UIViewController & ImageListViewController
     func reloadData(){
         tableView.reloadData()
     }
+    
+    func configCell(for cell: ImagesListCell, with indexPath: IndexPath, in tableView: UITableView) {
+        guard let presenter = self.presenter else { return }
+        let imageIndex = presenter.getPhotos()[indexPath.row]
+        let imageURLString = imageIndex.thumbImageURL
+        let imageURL = URL(string: imageURLString)
+        
+        _ = UIImage(named: "photo_stub")
+        
+        cell.cellImageView.kf.indicatorType = .activity
+        
+        cell.cellImageView.kf.cancelDownloadTask()
+        cell.cellImageView.kf.setImage(
+            with: imageURL,
+            placeholder: createPlaceholderImage(forCellWith: tableView.rectForRow(at: indexPath)),
+            options: nil) { completition in
+                switch completition {
+                case .success(_):
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    self.progressHUDDismiss()
+                    print("ImagesListPresenter.configCell: Загрузка фото завершена")
+                case .failure(let error):
+                    self.progressHUDDismiss()
+                    print("ImagesListPresenter.configCell: Загрузка фото НЕ завершена. Код - \(error)")
+                }
+            }
+        
+        let isLiked = imageIndex.isLiked
+        let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
+        cell.likeButton.setImage(likeImage, for: .normal)
+        
+        guard let imageDate = imageIndex.createdAt else {
+            cell.dateLabel.text = presenter.dateFormatter.string(from: Date())
+            return
+        }
+        cell.dateLabel.text = presenter.dateFormatter.string(from: imageDate)
+    }
+    
+    private func createPlaceholderImage(forCellWith frame: CGRect) -> UIImage {
+        let placeholderView = UIView(frame: CGRect(origin: .zero, size: frame.size))
+        placeholderView.backgroundColor = .white.withAlphaComponent(0.3)
+        
+        guard let imageStub = UIImage(named: "photo_stub") else { return UIImage() }
+        let imageStubView = UIImageView(image: imageStub)
+        imageStubView.translatesAutoresizingMaskIntoConstraints = false
+        placeholderView.addSubview(imageStubView)
+        
+        NSLayoutConstraint.activate([
+            imageStubView.centerXAnchor.constraint(equalTo: placeholderView.centerXAnchor),
+            imageStubView.centerYAnchor.constraint(equalTo: placeholderView.centerYAnchor),
+            imageStubView.heightAnchor.constraint(equalToConstant: 75),
+            imageStubView.widthAnchor.constraint(equalToConstant: 83)
+        ])
+        
+        placeholderView.layoutIfNeeded()
+        
+        UIGraphicsBeginImageContextWithOptions(placeholderView.bounds.size, false, 0.0)
+        placeholderView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let placeholderImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return placeholderImage ?? UIImage()
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource{
@@ -100,7 +163,7 @@ extension ImagesListViewController: UITableViewDataSource{
         
         imageListCell.delegate = self
         
-        presenter?.configCell(for: imageListCell, with: indexPath, in: tableView)
+        self.configCell(for: imageListCell, with: indexPath, in: tableView)
         return imageListCell
     }
     
