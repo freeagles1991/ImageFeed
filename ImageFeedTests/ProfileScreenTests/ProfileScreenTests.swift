@@ -22,7 +22,7 @@ final class ProfileScreenTests: XCTestCase {
     }
     
     ///Проверяем, что updateProfileDetails не изменяет профиль, если profileService.profile равно nil
-    func testUpdateProfileDetails_WithNilProfile() {
+    func testUpdateProfileDetailsWithNilProfile() {
         //given
         let mockProfileService = MockProfileService()
         mockProfileService.profile = nil
@@ -44,7 +44,7 @@ final class ProfileScreenTests: XCTestCase {
         XCTAssertEqual(presenter.profile?.bio, initialProfile.bio)
     }
     
-    func testUpdateProfileDetails_WithNoNilProfile() {
+    func testUpdateProfileDetailsWithNoNilProfile() {
         //given
         let mockProfileService = MockProfileService()
         let viewController = ProfileViewController()
@@ -65,7 +65,7 @@ final class ProfileScreenTests: XCTestCase {
         XCTAssertEqual(presenter.profile?.bio, initialProfile.bio)
     }
     
-    func testLogout_ProfileLogoutServiceCalled() {
+    func testLogoutProfileLogoutServiceCalled() {
         //given
         let mockLogoutService = MockProfileLogoutService()
         let viewController = ProfileViewController()
@@ -80,7 +80,7 @@ final class ProfileScreenTests: XCTestCase {
         XCTAssertTrue(mockLogoutService.isLogoutCalled)
     }
     
-    func testFetchProfileImageURL_ProfileImageServiceURL() {
+    func testFetchProfileImageURLProfileImageServiceURL() {
         //given
         let mockProfileImageService = MockProfileImageService()
         let viewController = ProfileViewController()

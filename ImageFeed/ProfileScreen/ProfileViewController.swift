@@ -133,17 +133,21 @@ final class ProfileViewController: UIViewController & ProfileViewViewControllerP
     }
     
     func updateAvatar() {
-        self.profileImageView.image = profilePlaceholderImage
-        presenter?.loadAvatar() { [weak self] result in
-            if let imageView = result {
-                guard let self = self else { return }
-                self.profileImageView.image = imageView
-                print("Изображение загружено и присвоено переменной.")
-            } else {
-                print("Ошибка загрузки изображения.")
-            }
-        }
+        guard let url = presenter?.getProfileAvatarURL() else { return }
         
+        let processor = RoundCornerImageProcessor(cornerRadius: 50)
+        
+        self.profileImageView.kf.setImage(
+            with: url,
+            placeholder: profilePlaceholderImage,
+            options: [.processor(processor)]) { result in
+                switch result {
+                case .success(let value):
+                    print("Изображение загружено и присвоено переменной.")
+                case .failure(let error):
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                }
+            }
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
     }

@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import UIKit
-import Kingfisher
 
 public protocol ProfilePresenterProtocol: AnyObject{
     var view: ProfileViewViewControllerProtocol? {get set}
@@ -16,7 +14,7 @@ public protocol ProfilePresenterProtocol: AnyObject{
     func logout()
     func logoutButtonTap()
     func updateProfileDetails()
-    func loadAvatar(completion: @escaping (UIImage?) -> Void)
+    func getProfileAvatarURL() -> URL?
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -63,25 +61,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         self.profile = profile
     }
     
-    func loadAvatar(completion: @escaping (UIImage?) -> Void) {
-        guard let url = self.getProfileAvatarURL() else { return completion(nil) }
-        
-        let processor = RoundCornerImageProcessor(cornerRadius: 50)
-        let imageView = UIImageView()
-        
-        imageView.kf.setImage(with: url, options: [.processor(processor)]) { result in
-            switch result {
-            case .success(let value):
-                imageView.image = value.image
-                completion(imageView.image)
-            case .failure(let error):
-                print("Ошибка загрузки изображения: \(error.localizedDescription)")
-                completion(nil)
-            }
-        }
-    }
-    
-    private func getProfileAvatarURL() -> URL? {
+    internal func getProfileAvatarURL() -> URL? {
         guard
             let profileImageURL = profileImageService?.smallAvatarURL,
             let url = URL(string: profileImageURL)
