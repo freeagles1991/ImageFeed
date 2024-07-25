@@ -14,7 +14,7 @@ final class AlertService {
     
     weak var delegate: UIViewController?
     weak var singleImageVCDelegate: SingleImageViewController?
-    weak var profileVCDelegate: ProfileViewController?
+    weak var profileVCDelegate: ProfilePresenterProtocol?
     
     /// Алерт для ошибки с одной кнопкой
     func showAlert(title: String, message: String, buttonTitle: String) {
@@ -73,7 +73,7 @@ final class AlertService {
         alertController.addAction(confirmAction)
         alertController.addAction(declineAction)
         
-        profileVCDelegate?.present(alertController, animated: true, completion: nil)
+        profileVCDelegate?.view?.present(alertController, animated: true, completion: nil)
     }
 }
 

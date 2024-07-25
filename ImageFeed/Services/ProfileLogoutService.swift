@@ -9,7 +9,11 @@ import Foundation
 import WebKit
 import Kingfisher
 
-final class ProfileLogoutService{
+public protocol ProfileLogoutServiceProtocol: AnyObject {
+    func logout()
+}
+
+final class ProfileLogoutService: ProfileLogoutServiceProtocol {
     static let shared = ProfileLogoutService()
     private init() { }
     

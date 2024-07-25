@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ImagesListCell: UITableViewCell {
+final public class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
     weak var delegate: ImagesListCellDelegate?
@@ -16,18 +16,18 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var cellImageView: UIImageView!
     
     @IBOutlet var likeButton: UIButton!
-
+    
     @IBOutlet var dateLabel: UILabel!
     
     private let gradientLayer = CAGradientLayer()
     private let gradientHeight: CGFloat = 30.0 // Фиксированная высота градиента
-
-    override func awakeFromNib() {
-         super.awakeFromNib()
-         setupGradientLayer()
-     }
     
-    override func layoutSubviews() {
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        setupGradientLayer()
+    }
+    
+    public override func layoutSubviews() {
         super.layoutSubviews()
         let gradientFrame = CGRect(
             x: 0,
@@ -38,20 +38,20 @@ final class ImagesListCell: UITableViewCell {
         gradientLayer.frame = gradientFrame
     }
     
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         super.prepareForReuse()
         
         cellImageView.kf.cancelDownloadTask()
     }
-
+    
     private func setupGradientLayer() {
-         gradientLayer.colors = [
-             UIColor.clear.cgColor,
-             UIColor.black.withAlphaComponent(0.5).cgColor
-         ]
-         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-         cellImageView.layer.addSublayer(gradientLayer)
+        gradientLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.black.withAlphaComponent(0.5).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        cellImageView.layer.addSublayer(gradientLayer)
     }
     
     private func setupImageView() {
@@ -69,6 +69,9 @@ final class ImagesListCell: UITableViewCell {
     func setIsLiked(isLiked: Bool){
         let likeImage = isLiked ? UIImage(named: "FavoritreActive") : UIImage(named: "FavoritreNoActive")
         likeButton.setImage(likeImage, for: .normal)
+        let likeButtonID = isLiked ? String("like button on") : String("like button off")
+        likeButton.accessibilityIdentifier = likeButtonID
+        
     }
     
     @IBAction func likeButtonClicked(_ sender: UIButton) {

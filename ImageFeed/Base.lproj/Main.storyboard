@@ -41,7 +41,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uE2-NC-qEy" userLabel="LikeButton">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
-                                                    <accessibility key="accessibilityConfiguration">
+                                                    <accessibility key="accessibilityConfiguration" identifier="like button off" label="like button off">
                                                         <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                     </accessibility>
                                                     <constraints>
@@ -153,6 +153,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNg-Hi-YOC" userLabel="BackwardButton">
                                 <rect key="frame" x="9" y="11" width="24" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="nav back button white" label="nav back button white"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="9Yf-dK-Ap3"/>
                                     <constraint firstAttribute="height" constant="24" id="WQu-fD-K2l"/>
@@ -239,6 +240,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIa-hY-1CU" userLabel="AuthButton">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="colorWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate" label="Authenticate">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="9KZ-qd-c4c"/>
                                 </constraints>
@@ -278,7 +283,7 @@
         <!--WebViewViewController-->
         <scene sceneID="pwA-3a-7PK">
             <objects>
-                <viewController title="WebViewViewController" modalPresentationStyle="fullScreen" id="C3W-OV-Jbt" userLabel="WebViewViewController" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" title="WebViewViewController" modalPresentationStyle="fullScreen" id="C3W-OV-Jbt" userLabel="WebViewViewController" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yzH-Ek-W25">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -290,6 +295,9 @@
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                                </userDefinedRuntimeAttributes>
                             </wkWebView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bCa-rr-zXa">
                                 <rect key="frame" x="0.0" y="103" width="393" height="4"/>

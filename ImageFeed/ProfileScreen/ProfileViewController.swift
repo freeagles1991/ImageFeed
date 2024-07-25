@@ -9,47 +9,42 @@ import Foundation
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewViewControllerProtocol: UIViewController {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateAvatar()
+}
+
+final class ProfileViewController: UIViewController & ProfileViewViewControllerProtocol {
+    var presenter: ProfilePresenterProtocol?
     
     private var nameLabel: UILabel?
     private var loginLabel: UILabel?
     private var statusLabel: UILabel?
     private var exitButtonView: UIButton?
     private var profileImageView = UIImageView()
-    private let profileImage = UIImage(named: "ProfilePhoto")
+    private var profileImage = UIImage(named: "ProfilePhoto")
+    private var profilePlaceholderImage = UIImage(named: "placeholder.jpeg")
     private let profileNameString = "Екатерина Новикова"
     private let emailString = "@ekaterina_nov"
     private let statusString = "Hello, world!"
     
-    let profileService = ProfileService.shared
-    let profileImageService = ProfileImageService.shared
-    private let profileLogoutService = ProfileLogoutService.shared
-    private let alertService = AlertService.shared
-    
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        alertService.profileVCDelegate = self
         
         self.setupProfileImageView()
         self.setupNameLabel()
         self.setupEmailLabel()
         self.setupStatusLabel()
         self.setupExitbutton()
-        guard let profile = profileService.profile else { return }
-        self.updateProfileDetails(profile: profile)
         
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-                        forName: ProfileImageService.didChangeNotification,
-                       object: nil,
-                       queue: .main
-                   ) { [weak self] _ in
-                       guard let self = self else { return }
-                       self.updateAvatar()
-                   }
-               updateAvatar()
+        presenter?.viewDidLoad()
+        self.updateProfileDetails()
+    }
+    
+    ///Конфигурируем Presenter  и Viewer
+    func configure(_ presenter: ProfilePresenterProtocol) {
+        self.presenter = presenter
+        presenter.view = self
     }
     
     private func setupProfileImageView(){
@@ -114,6 +109,7 @@ final class ProfileViewController: UIViewController {
     
     private func setupExitbutton(){
         let exitButtonView = UIButton(type: .custom)
+        exitButtonView.accessibilityIdentifier = "Logout button"
         exitButtonView.setImage(UIImage(named: "LogoutIcon"), for: .normal)
         exitButtonView.addTarget(self, action: #selector(logoutButtonTap), for: .touchUpInside)
         
@@ -128,38 +124,39 @@ final class ProfileViewController: UIViewController {
         self.exitButtonView = exitButtonView
     }
     
-    private func updateProfileDetails(profile: Profile){
+    private func updateProfileDetails() {
+        presenter?.updateProfileDetails()
+        guard let profile = presenter?.profile else { return }
         nameLabel?.text = profile.name
         statusLabel?.text = profile.bio
         loginLabel?.text = profile.loginName
     }
     
-    private func updateAvatar() {
-            guard
-                let profileImageURL = profileImageService.smallAvatarURL,
-                let url = URL(string: profileImageURL)
-            else { return }
-        profileImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)
-        profileImageView.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "placeholder.jpeg"),
-            options: [.processor(processor)])
+    func updateAvatar() {
+        guard let url = presenter?.getProfileAvatarURL() else { return }
         
+        let processor = RoundCornerImageProcessor(cornerRadius: 50)
+        
+        self.profileImageView.kf.setImage(
+            with: url,
+            placeholder: profilePlaceholderImage,
+            options: [.processor(processor)]) { result in
+                switch result {
+                case .success(let value):
+                    print("Изображение загружено и присвоено переменной.")
+                case .failure(let error):
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                }
+            }
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
-        }
+    }
     
-    func logout(){
-        UIBlockingProgressHUD.show()
-        profileLogoutService.logout()
-        let splashViewCotroller = SplashViewController()
-        splashViewCotroller.modalPresentationStyle = .fullScreen
-        self.present(splashViewCotroller, animated: true, completion: nil)
-        UIBlockingProgressHUD.dismiss()
+    func getProfileImageView() -> UIImageView? {
+        return profileImageView
     }
     
     @IBAction private func logoutButtonTap(_ sender: UIButton) {
-        alertService.showAlert(title: "Пока!", message: "Точно хотите выйти?", buttonConfirmTitle: "Да, ухожу", buttonDeclineTitle: "Нет, остаюсь")
+        presenter?.logoutButtonTap()
     }
 }
